@@ -347,6 +347,43 @@ If you're interested in where this is heading, watch the [xswarm.ai](https://xsw
 
 ---
 
+## Principles-First Rule Design (Or: Why Every Rule Has a Reason)
+
+Every rule in this system follows the same pattern: **principle + brief explanation of WHY**. Not just "do this" but "do this *because*."
+
+This isn't just a stylistic preference --- it's grounded in how modern AI models actually process instructions. Anthropic's paper on [Claude's Constitution](https://www.anthropic.com/constitution) makes the case explicitly:
+
+> *"We generally favor cultivating good values and judgment over strict rules and decision procedures."*
+
+The core insight is that **rigid rules fail in novel situations, but sound principles generalize**. When a model understands *why* a rule exists, it can apply the underlying principle correctly even in edge cases the rule never anticipated. When it only has the bare rule, it either follows it mechanically in situations where it shouldn't, or quietly drops it when context pressure mounts.
+
+The constitution also warns that narrow behavioral training has broad downstream effects on the model's self-understanding. A rule like "always do X" without rationale can cause the model to develop a self-model as "someone who mechanically follows instructions" rather than "someone who understands quality and acts accordingly." The *why* transforms compliance into judgment.
+
+**Before:**
+```markdown
+- Run tests after EVERY change
+- Never sacrifice readability for size
+- Never break tests to reduce LOC
+```
+
+**After:**
+```markdown
+- **Run tests after EVERY change.** Catching regressions immediately is far cheaper
+  than debugging them later when multiple changes have stacked up.
+- **Never sacrifice readability for size.** Code is read far more often than written;
+  unclear code costs more in maintenance than the bytes it saves.
+- **Never break tests to reduce LOC.** Tests are the behavioral specification — breaking
+  them changes requirements, not just implementation.
+```
+
+The difference is subtle but compounds across an entire instruction set. With bare rules, the model pattern-matches: "I see a rule, I follow the rule." With principles, the model *reasons*: "I understand what this rule protects, so I can apply it correctly even in situations the rule author didn't anticipate."
+
+Every instruction file in this system --- `TDD.md`, `coder.md`, `reviewer.md`, `tester.md`, `team-lead.md`, `stuck.md`, and the CLAUDE topic files --- follows this pattern. It adds maybe 30% more tokens to instruction files. The improvement in rule adherence, especially deep into long conversations where context pressure erodes bare directives, is worth far more than the token cost.
+
+**The practical takeaway:** If you're writing instructions for AI agents, don't just say what. Say why. One sentence is enough. The model will do the rest.
+
+---
+
 ## Things I Learned the Hard Way
 
 **Constraints make agents reliable, not limited.** The coder *can't* make architectural decisions because it doesn't have the context or instructions. This isn't a bug. This is the feature.
@@ -358,6 +395,8 @@ If you're interested in where this is heading, watch the [xswarm.ai](https://xsw
 **Parallel execution is free performance.** Properly decomposed tasks with dependency mapping run in parallel at the same token cost --- they just finish sooner. Planning overhead pays for itself on any project with 3+ tasks.
 
 **Documentation should be mandatory.** Making doc the final pipeline step means every deliverable arrives documented. Six months later, both you *and* Claude can understand what was built and why.
+
+**Tell your AI agents *why*, not just *what*.** Rules without rationale erode under context pressure. Principles with brief explanations stick. One sentence of "why" per rule costs almost nothing and dramatically improves adherence in long sessions. This is now backed by Anthropic's own research on [constitutional AI design](https://www.anthropic.com/constitution).
 
 ---
 
