@@ -122,11 +122,50 @@ The agent architecture solves this by giving each coding invocation a fresh cont
 │   └── cleanup-tmp-scripts.py # Cleans up after task completion
 │
 └── skills/
-    └── plan/
-        └── SKILL.md           # Requirements gathering + task decomposition
+    ├── plan/                  # Requirements gathering + task decomposition
+    ├── agent-builder/         # Custom subagent creation guide
+    ├── doc-coauthoring/       # Structured documentation co-authoring (Anthropic)
+    ├── docx/                  # Word document manipulation (Anthropic)
+    ├── frontend-design/       # Production-grade UI with bold aesthetics (Anthropic)
+    ├── mcp-builder/           # MCP server development guide (Anthropic)
+    ├── modern-python/         # uv/ruff/ty Python tooling (Trail of Bits)
+    ├── pdf/                   # PDF manipulation toolkit (Anthropic)
+    ├── pptx/                  # PowerPoint manipulation (Anthropic)
+    ├── project-cleanup/       # File structure organization
+    ├── property-based-testing/ # Hypothesis/QuickCheck patterns (Trail of Bits)
+    ├── security-scan/         # Gitleaks secret detection
+    ├── skill-creator/         # Skill authoring guide (Anthropic)
+    ├── systematic-debugging/  # 4-phase root cause analysis (Superpowers)
+    ├── tui-viewer/            # TUI screenshot verification
+    ├── using-git-worktrees/   # Parallel branch isolation (Superpowers)
+    ├── web-artifacts-builder/ # React/Tailwind/shadcn artifacts (Anthropic)
+    ├── webapp-testing/        # Playwright browser testing (Anthropic)
+    └── xlsx/                  # Spreadsheet manipulation (Anthropic)
 ```
 
 The `.gitignore` excludes all Claude-managed runtime directories (cache, debug, todos, session state, telemetry, history, etc.) so the repository contains only your authored configuration.
+
+### Skills: Sources and Activation Scoping
+
+Skills are loaded on-demand — Claude scans each skill's description (~100 tokens) and only loads the full content when it detects relevance to the current task. This means 20 skills cost almost nothing at idle. The key is proper scoping in each skill's `description` field:
+
+**Coding workflow skills** activate only during development tasks:
+- **systematic-debugging** — Triggers on bugs, test failures, unexpected behavior. From [Superpowers](https://github.com/obra/superpowers) (46K+ stars, MIT).
+- **using-git-worktrees** — Triggers when starting feature work needing branch isolation. From [Superpowers](https://github.com/obra/superpowers).
+- **property-based-testing** — Triggers when writing tests for serialization, parsing, or validation patterns. From [Trail of Bits](https://github.com/trailofbits/skills) (CC BY-SA 4.0).
+- **security-scan** — Mandatory before any coder agent completes. Custom.
+
+**Language-specific skills** activate only for their language:
+- **modern-python** — Triggers only for Python projects (uv, ruff, ty tooling). From [Trail of Bits](https://github.com/trailofbits/skills).
+- **frontend-design** — Triggers for React/Tailwind web UI work. From [Anthropic](https://github.com/anthropics/skills).
+- **web-artifacts-builder** — Triggers for complex React/TypeScript artifacts. From [Anthropic](https://github.com/anthropics/skills).
+
+**Document/format skills** activate only when working with that format:
+- **docx**, **pdf**, **pptx**, **xlsx** — From [Anthropic](https://github.com/anthropics/skills).
+- **doc-coauthoring** — Triggers for structured documentation writing. From [Anthropic](https://github.com/anthropics/skills).
+
+**Meta skills** (rarely triggered):
+- **plan**, **skill-creator**, **agent-builder**, **project-cleanup**, **tui-viewer**, **mcp-builder**, **webapp-testing** — Each scoped to its specific use case.
 
 ---
 

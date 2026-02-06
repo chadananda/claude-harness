@@ -14,6 +14,7 @@ desktop.ini
 # build artifacts
 __pycache__/
 *.pyc
+*.png
 
 # claude-managed (not user files)
 backup/
