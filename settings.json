@@ -1,0 +1,70 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash",
+      "WebFetch(domain:example.com)",
+      "WebFetch(domain:*.github.com)"
+    ],
+    "deny": [
+      "Bash(cd:~/tmp*)",
+      "Bash(cd:/tmp*)",
+      "Write(path:~/tmp/*)",
+      "Write(path:/tmp/*)",
+      "Edit(path:~/tmp/*)",
+      "Edit(path:/tmp/*)"
+    ]
+  },
+  "hooks": {
+    "Notification": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 ~/.claude/notify.py"
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Task",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 ~/.claude/notify.py"
+          }
+        ]
+      },
+      {
+        "matcher": "TaskUpdate",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 ~/.claude/hooks/cleanup-tmp-scripts.py"
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 -c \"import json, sys; data=json.load(sys.stdin); path=data.get('tool_input',{}).get('file_path','') or data.get('tool_input',{}).get('path',''); sys.exit(2) if ('/tmp/' in path or path.startswith('~/tmp')) else 0\""
+          },
+          {
+            "type": "command",
+            "command": "python3 ~/.claude/hooks/warn-root-files.py"
+          }
+        ]
+      }
+    ]
+  },
+  "statusLine": {
+    "type": "command",
+    "command": "input=$(cat); cwd=$(echo \"$input\" | jq -r '.workspace.current_dir' | sed 's|.*/||'); model=$(echo \"$input\" | jq -r '.model.display_name'); version=$(echo \"$input\" | jq -r '.version'); cd \"$(echo \"$input\" | jq -r '.workspace.current_dir')\"; if git rev-parse --git-dir > /dev/null 2>&1; then branch=$(git branch --show-current 2>/dev/null || echo 'detached'); status=$(git status --porcelain 2>/dev/null | wc -l | tr -d ' '); if [ \"$status\" != \"0\" ]; then git_status=\"*\"; else git_status=\"\"; fi; git_info=\"$branch$git_status\"; else git_info=\"no-git\"; fi; printf \"📁%s ║ 🤖%s ║ 🏷️%s ║ 🌿%s\" \"$cwd\" \"$model\" \"$version\" \"$git_info\""
+  },
+  "alwaysThinkingEnabled": true
+}

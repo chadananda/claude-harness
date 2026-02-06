@@ -1,0 +1,38 @@
+# secrets
+.env
+*.env
+
+# os files
+.DS_Store
+Thumbs.db
+desktop.ini
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# build artifacts
+__pycache__/
+*.pyc
+
+# claude-managed (not user files)
+backup/
+cache/
+debug/
+downloads/
+file-history/
+ide/
+paste-cache/
+plans/
+plugins/
+projects/
+session-env/
+shell-snapshots/
+statsig/
+tasks/
+telemetry/
+tmp/
+todos/
+history.jsonl
+stats-cache.json
+settings.local.json

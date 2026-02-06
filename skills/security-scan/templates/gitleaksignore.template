@@ -1,0 +1,120 @@
+# .gitleaksignore Template
+# Copy this to your project root as .gitleaksignore
+#
+# This file lists files/patterns to ignore for secret scanning.
+# Use this for genuine false positives only.
+
+# ==============================================================================
+# Documentation with Example Keys
+# ==============================================================================
+
+README.md
+docs/getting-started.md
+docs/api-reference.md
+docs/examples.md
+CONTRIBUTING.md
+
+# ==============================================================================
+# Examples and Sample Code
+# ==============================================================================
+
+examples/**/*
+samples/**/*
+demo/**/*
+
+# ==============================================================================
+# Test Files and Fixtures
+# ==============================================================================
+
+# Python tests
+**/*_test.py
+**/test_*.py
+tests/**/*.py
+
+# JavaScript/TypeScript tests
+**/*.test.js
+**/*.test.ts
+**/*.spec.js
+**/*.spec.ts
+__tests__/**/*
+
+# Go tests
+**/*_test.go
+
+# Rust tests
+**/*_test.rs
+
+# Test fixtures and data
+tests/fixtures/**/*
+tests/data/**/*
+tests/mocks/**/*
+**/testdata/**/*
+
+# ==============================================================================
+# Build and Generated Files
+# ==============================================================================
+
+dist/**/*
+build/**/*
+target/**/*
+.next/**/*
+out/**/*
+
+# ==============================================================================
+# Dependencies (usually already gitignored)
+# ==============================================================================
+
+node_modules/**/*
+vendor/**/*
+.venv/**/*
+
+# ==============================================================================
+# Specific False Positives (file:line format)
+# ==============================================================================
+# Format: path/to/file.ext:line_number
+# Or: path/to/file.ext:line_number:commit_sha
+#
+# Add specific findings here after verification they're safe
+# ALWAYS comment why it's safe!
+
+# Example (delete these and add your own):
+# docs/api-tutorial.md:45  # Example API key in tutorial
+# config/example.yaml:12   # Template configuration file
+
+# ==============================================================================
+# Rotated/Deactivated Secrets
+# ==============================================================================
+# Secrets that were rotated and are now safe to ignore
+# ALWAYS rotate BEFORE adding here!
+#
+# Format: path/to/file.ext:line_number  # Rotated on YYYY-MM-DD
+
+# Example (delete these and add your own):
+# src/legacy/old-config.py:23  # Rotated on 2025-01-10
+# scripts/old-deploy.sh:45     # Rotated on 2025-01-05
+
+# ==============================================================================
+# Project-Specific Exclusions
+# ==============================================================================
+# Add project-specific patterns below
+
+# MCP server example configs (safe templates)
+# **/mcp-server-config.example.json
+# **/mcp-config.example.json
+
+# Terraform example files
+# terraform/**/*.example.tf
+
+# Kubernetes example manifests
+# k8s/examples/**/*.yaml
+
+# ==============================================================================
+# NOTES
+# ==============================================================================
+# - Always verify a finding is genuinely safe before adding to this file
+# - Document WHY each entry is safe (use comments)
+# - For rotated secrets, include rotation date
+# - Review this file periodically (quarterly recommended)
+# - Remove entries for files that no longer exist
+# - Prefer .gitleaks.toml allowlists for pattern-based exclusions
+# - Use this file for specific file:line exceptions

@@ -1,0 +1,89 @@
+# Pre-commit Configuration Template
+# Copy this to your project root as .pre-commit-config.yaml
+#
+# This configures Git pre-commit hooks to automatically scan for secrets
+# before allowing commits.
+#
+# Setup:
+#   1. pip install pre-commit
+#   2. pre-commit install
+#   3. (optional) pre-commit run --all-files
+
+repos:
+  # Gitleaks - Secret Detection
+  - repo: https://github.com/gitleaks/gitleaks
+    rev: v8.25.0  # Use latest version from: https://github.com/gitleaks/gitleaks/releases
+    hooks:
+      - id: gitleaks
+        name: Scan for secrets with Gitleaks
+        description: Detect hardcoded secrets (API keys, tokens, passwords)
+        entry: gitleaks protect --verbose --redact --staged
+        language: system
+        pass_filenames: false
+        args:
+          - '--no-banner'      # Hide Gitleaks banner
+          - '--verbose'        # Show detailed output
+          - '--redact'         # Redact secrets in output (safer)
+          # - '--config'       # Uncomment to use custom config
+          # - '.gitleaks.toml' # Path to custom config file
+
+  # Optional: Additional security checks
+
+  # Detect Private Keys
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.5.0
+    hooks:
+      - id: detect-private-key
+        name: Detect private keys
+        description: Detect private SSH/PGP keys
+
+  # Check for merge conflicts
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.5.0
+    hooks:
+      - id: check-merge-conflict
+        name: Check for merge conflicts
+        description: Prevent commits with unresolved merge conflicts
+
+  # Prevent large files (optional - adjust size)
+  # - repo: https://github.com/pre-commit/pre-commit-hooks
+  #   rev: v4.5.0
+  #   hooks:
+  #     - id: check-added-large-files
+  #       name: Check for large files
+  #       args: ['--maxkb=500']  # Adjust size limit as needed
+
+  # Optional: TruffleHog (slower but more thorough - use for pre-push or CI/CD)
+  # - repo: local
+  #   hooks:
+  #     - id: trufflehog
+  #       name: TruffleHog
+  #       description: Detect secrets with verification
+  #       entry: bash -c 'trufflehog git file://. --since-commit HEAD --only-verified --fail'
+  #       language: system
+  #       stages: ["pre-push"]  # Run on push, not commit (slower)
+
+# Hook behavior configuration
+default_stages: [commit, merge-commit]
+fail_fast: false  # Run all hooks even if one fails
+minimum_pre_commit_version: '2.20.0'
+
+# CI Configuration (optional)
+ci:
+  autofix_commit_msg: |
+    [pre-commit.ci] auto fixes from pre-commit hooks
+
+    for more information, see https://pre-commit.ci
+  autofix_prs: true
+  autoupdate_branch: ''
+  autoupdate_commit_msg: '[pre-commit.ci] pre-commit autoupdate'
+  autoupdate_schedule: weekly
+  skip: []
+  submodules: false
+
+# NOTES:
+# - Pre-commit hooks run automatically before each commit
+# - To bypass (emergency only): git commit --no-verify
+# - To run manually: pre-commit run --all-files
+# - To update hooks: pre-commit autoupdate
+# - To skip specific hook: SKIP=gitleaks git commit -m "message"

@@ -1,0 +1,345 @@
+# Project Cleanup Configuration
+# Place this file in your project root as .cleanup-config.yaml
+# All settings are optional - if not specified, defaults will be used
+
+# Files or patterns to keep in root directory (override defaults)
+# Use this when you intentionally want certain files in root
+keep_in_root:
+  - deploy.py                    # Custom deployment script
+  - ARCHITECTURE.md              # Team prefers architecture doc in root
+  - setup.py                     # Required for editable install (Python)
+  # - your-file-here.ext
+
+# Files or directories to never move (override classification)
+# Use this to protect specific files from reorganization
+never_move:
+  - legacy/                      # Legacy code - don't touch
+  - vendor/                      # Third-party code
+  - examples/special-demo.py     # Important example that stays where it is
+  # - your-protected-path
+
+# Custom directory mappings
+# Specify where certain files/folders should be moved
+directory_mappings:
+  planning: docs/planning         # Move planning/ to docs/planning
+  guides: docs/guides             # Move guides/ to docs/guides
+  utilities: scripts/utils        # Move utilities/ to scripts/utils
+  # source-dir: destination-dir
+
+# Documentation consolidation settings
+consolidation:
+  # Threshold for automatic merge suggestions (0.0 to 1.0)
+  # Files with overlap above this will be suggested for consolidation
+  auto_merge_threshold: 0.5      # Default: 0.5 (50% overlap)
+
+  # Always ask user before merging (recommended)
+  ask_user: true                 # Default: true
+
+  # Archive old files instead of deleting
+  archive_old: true              # Default: true
+
+  # Archive directory location
+  archive_dir: docs/.archive     # Default: docs/.archive
+
+# File tree generation settings
+file_tree:
+  # Maximum depth to show in tree
+  max_depth: 3                   # Default: 3
+
+  # Include hidden files/directories
+  include_hidden: false          # Default: false
+
+  # Patterns to exclude from tree
+  exclude_patterns:
+    - node_modules
+    - __pycache__
+    - .git
+    - dist
+    - build
+    - target
+    - .venv
+    - venv
+    - .pytest_cache
+    - .mypy_cache
+    # - your-pattern
+
+# Language-specific overrides
+# Force language-specific project structures
+language_overrides:
+  # Go-specific settings
+  go:
+    use_cmd_pkg_structure: true  # Force cmd/, pkg/, internal/ structure
+    # no_src_dir: true            # Don't suggest src/ for Go projects
+
+  # Python-specific settings
+  python:
+    prefer_src_layout: true      # Prefer src/ over flat layout
+    # use_flat_layout: false      # Don't suggest flat layout
+
+  # Node.js-specific settings
+  node:
+    # use_src_dir: true           # Always use src/ directory
+    # no_lib_dir: false           # Allow lib/ as alternative to src/
+
+  # Rust-specific settings
+  rust:
+    # commit_cargo_lock: true     # Always commit Cargo.lock (for binaries)
+    # gitignore_cargo_lock: false # For libraries
+
+# Temporary file detection overrides
+temporary_patterns:
+  # Additional patterns to treat as temporary
+  additional_suffixes:
+    - .backup
+    - .old
+    # - .your-temp-suffix
+
+  # Additional prefixes to treat as temporary
+  additional_prefixes:
+    - draft_
+    - wip_
+    # - your-temp-prefix_
+
+  # Patterns to NEVER treat as temporary (even if they match)
+  exceptions:
+    - important.tmp              # This .tmp file is actually important
+    # - your-exception
+
+# Script classification overrides
+scripts:
+  # Files that look like scripts but should be treated as config
+  not_scripts:
+    - setup.py                   # Python packaging, not a script
+    # - manage.py                 # Django management, keep in root
+
+  # Files that should be treated as scripts (even without shebang)
+  force_scripts:
+    - my-custom-tool
+    # - your-script-name
+
+# Documentation detection overrides
+documentation:
+  # .md files to keep in root (in addition to README.md, LICENSE.md, etc.)
+  keep_in_root:
+    - ARCHITECTURE.md
+    - ROADMAP.md
+    # - YOUR-DOC.md
+
+  # .md files to move to docs/ (even if they would normally stay in root)
+  move_to_docs:
+    # - CONTRIBUTING.md           # Prefer .github/CONTRIBUTING.md
+    # - your-doc.md
+
+# Git behavior settings
+git:
+  # Always use git mv (preserve history)
+  use_git_mv: true               # Default: true
+
+  # Create commits automatically
+  auto_commit: false             # Default: false (ask user)
+
+  # Commit message template
+  commit_message: |
+    chore: organize project structure
+
+    - Moved documentation to docs/
+    - Moved scripts to scripts/
+    - Moved temporary files to tmp/
+    - Generated folder README.md files
+    - Updated main README.md with file tree
+
+# Cleanup mode settings
+modes:
+  # Default mode (interactive, auto, or dry-run)
+  default: interactive           # Default: interactive
+
+  # Skip confirmation prompts in auto mode
+  auto_confirm_safe_moves: true  # Default: true
+
+  # Show detailed reasoning for classifications
+  verbose_classification: false  # Default: false
+
+# Custom classification rules
+# Define your own rules for specific file patterns
+custom_rules:
+  # Example: Keep all .config.js files in root
+  - pattern: "*.config.js"
+    action: keep_root
+    reason: "Project configuration files"
+
+  # Example: Move all .data.json files to tmp/
+  - pattern: "*.data.json"
+    action: move_tmp
+    reason: "Data files are temporary"
+
+  # # Your custom rules:
+  # - pattern: "your-pattern"
+  #   action: keep_root | move_docs | move_scripts | move_tmp | move_tests
+  #   reason: "Your reason"
+
+# Monorepo settings
+monorepo:
+  # Detect and handle as monorepo
+  auto_detect: true              # Default: true
+
+  # Apply cleanup to all workspaces or prompt
+  apply_to_all_workspaces: false # Default: false (prompt)
+
+  # Workspace directories to exclude
+  exclude_workspaces:
+    # - workspace-name
+
+# Pre-commit hook settings
+precommit:
+  # Enable warnings for misplaced files
+  enable_warnings: true          # Default: true
+
+  # Block commits with misplaced files (strict mode)
+  block_commits: false           # Default: false (warn only)
+
+  # Suggest correct location in warnings
+  suggest_location: true         # Default: true
+
+# Performance settings
+performance:
+  # Enable parallel processing for large projects
+  parallel_processing: true      # Default: true
+
+  # Number of worker threads (0 = auto-detect)
+  worker_threads: 0              # Default: 0
+
+  # Cache file purposes to avoid re-analysis
+  cache_file_purposes: true      # Default: true
+
+  # Cache location
+  cache_file: .cleanup-cache.json
+
+---
+
+# Configuration Examples
+
+# Example 1: Python Project with Custom Structure
+# keep_in_root:
+#   - manage.py              # Django management script
+#   - setup.py               # Package configuration
+#
+# language_overrides:
+#   python:
+#     prefer_src_layout: true
+#
+# directory_mappings:
+#   notebooks: docs/notebooks
+
+# Example 2: Node.js Monorepo
+# monorepo:
+#   auto_detect: true
+#   apply_to_all_workspaces: true
+#
+# keep_in_root:
+#   - lerna.json
+#   - nx.json
+#
+# file_tree:
+#   max_depth: 2             # Shallower for large monorepos
+
+# Example 3: Go Project with Strict Conventions
+# language_overrides:
+#   go:
+#     use_cmd_pkg_structure: true
+#
+# never_move:
+#   - cmd/
+#   - pkg/
+#   - internal/
+#
+# custom_rules:
+#   - pattern: "*.go"
+#     action: keep
+#     reason: "Go files should stay in place"
+
+# Example 4: Documentation-Heavy Project
+# consolidation:
+#   auto_merge_threshold: 0.7
+#   ask_user: true
+#
+# documentation:
+#   keep_in_root:
+#     - ARCHITECTURE.md
+#     - DESIGN.md
+#
+# directory_mappings:
+#   adr: docs/adr            # Architecture Decision Records
+#   rfcs: docs/rfcs          # RFCs
+
+# Example 5: Legacy Project (Minimal Changes)
+# never_move:
+#   - "*"                    # Protect everything
+#
+# modes:
+#   default: dry-run         # Only show what would change
+#
+# consolidation:
+#   ask_user: true
+#   auto_merge_threshold: 0.9  # Very high bar for merging
+
+---
+
+# How to Use This File
+
+# 1. Copy this template to your project root:
+#    cp ~/.claude/skills/project-cleanup/templates/cleanup-config-template.yaml .cleanup-config.yaml
+
+# 2. Uncomment and customize sections you need:
+#    - Remove '#' from lines you want to activate
+#    - Add your own files/patterns
+
+# 3. Run cleanup with your config:
+#    @project-cleanup --mode=interactive
+#    # Config will be automatically detected
+
+# 4. Test with dry-run first:
+#    @project-cleanup --mode=dry-run
+#    # See what would change without making changes
+
+# 5. Commit your config:
+#    git add .cleanup-config.yaml
+#    git commit -m "chore: add project cleanup configuration"
+#    # Team shares cleanup preferences
+
+---
+
+# Precedence Rules
+
+# When multiple rules could apply to a file:
+# 1. never_move (highest precedence)
+# 2. keep_in_root
+# 3. custom_rules (in order defined)
+# 4. language_overrides
+# 5. Default classification rules (lowest precedence)
+
+# Example:
+# If setup.py is in never_move, it won't be moved even if:
+# - Default rules would move it to scripts/
+# - A custom rule would move it somewhere else
+# - Language overrides suggest different location
+
+---
+
+# Validation
+
+# To validate your configuration:
+# python ~/.claude/skills/project-cleanup/scripts/validate-config.py .cleanup-config.yaml
+
+# Common validation errors:
+# - Invalid YAML syntax
+# - Unknown configuration keys
+# - Invalid values (e.g., auto_merge_threshold > 1.0)
+# - Conflicting rules (file in both keep_in_root and never_move)
+
+---
+
+# See Also
+
+# - Main documentation: ~/.claude/skills/project-cleanup/SKILL.md
+# - File classification reference: ~/.claude/skills/project-cleanup/reference/file-classification.md
+# - Language patterns reference: ~/.claude/skills/project-cleanup/reference/language-patterns.md

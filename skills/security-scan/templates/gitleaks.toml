@@ -1,0 +1,120 @@
+# Gitleaks Configuration Template
+# Copy this to your project root as .gitleaks.toml
+
+title = "Project Security Scan Configuration"
+
+# Use all built-in Gitleaks rules (800+ secret patterns)
+[extend]
+useDefault = true
+
+# Add custom rules for project-specific secrets
+[[rules]]
+id = "custom-internal-token"
+description = "Internal Service Token"
+regex = '''int_tok_[A-Za-z0-9]{32}'''
+tags = ["internal", "token"]
+entropy = 3.5
+
+# Uncomment and customize for your project
+# [[rules]]
+# id = "custom-api-key"
+# description = "Custom API Key Format"
+# regex = '''mycompany_api_[A-Z0-9]{20}_[a-z0-9]{12}'''
+# tags = ["api", "custom"]
+# entropy = 4.0
+
+# Global allowlist (applies to all rules)
+[allowlist]
+description = "Global patterns to ignore"
+
+# Ignore specific file paths
+paths = [
+    # Test files
+    '''.*_test\.py''',
+    '''.*_test\.go''',
+    '''.*\.test\.js''',
+    '''.*\.test\.ts''',
+    '''.*Spec\.js''',
+    '''__tests__/.*''',
+
+    # Documentation
+    '''docs/.*\.md''',
+    '''README\.md''',
+    '''CHANGELOG\.md''',
+
+    # Examples
+    '''examples/.*''',
+    '''sample/.*''',
+
+    # Dependencies (shouldn't be scanned anyway)
+    '''node_modules/.*''',
+    '''vendor/.*''',
+    '''\.git/.*''',
+
+    # Build outputs
+    '''dist/.*''',
+    '''build/.*''',
+    '''target/.*''',
+    '''\.next/.*''',
+
+    # Temporary files
+    '''tmp/.*''',
+    '''temp/.*''',
+    '''\.cache/.*'''
+]
+
+# Ignore regex patterns (strings matching these won't be flagged)
+regexes = [
+    # Placeholder patterns
+    '''YOUR-.*-HERE''',
+    '''REPLACE-WITH-.*''',
+    '''INSERT-.*-HERE''',
+    '''.*EXAMPLE.*''',
+    '''.*SAMPLE.*''',
+
+    # Test/fake keys
+    '''test-key-not-real''',
+    '''fake-.*-key''',
+    '''dummy-.*''',
+
+    # UUIDs (often not secrets)
+    '''[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}'''
+]
+
+# Stopwords (if these appear near a secret, it's likely safe)
+stopwords = [
+    'example',
+    'sample',
+    'test',
+    'fake',
+    'dummy',
+    'demo',
+    'placeholder',
+    'not-real',
+    'your-key-here',
+    'replace-with'
+]
+
+# Specific commits to ignore (use sparingly)
+commits = [
+    # 'abc123def456'  # Legacy migration commit with safe data
+]
+
+# Per-rule allowlists (example)
+# Uncomment and customize if needed
+
+# [[rules]]
+# id = "aws-access-key"
+# description = "AWS Access Key ID"
+# regex = '''(AKIA|ASIA|ABIA|ACCA)[0-9A-Z]{16}'''
+#
+# [rules.allowlist]
+# description = "Allow AWS example keys in docs"
+# paths = [
+#     '''docs/.*''',
+#     '''examples/.*'''
+# ]
+# regexes = [
+#     '''AKIA.*EXAMPLE''',
+#     '''ASIA.*SAMPLE'''
+# ]

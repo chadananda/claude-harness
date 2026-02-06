@@ -1,0 +1,36 @@
+# Python dependencies for project-cleanup scripts
+# Install with: pip install -r requirements.txt
+
+# YAML configuration parsing
+pyyaml>=6.0
+
+# Tree generation and file operations
+pathlib2>=2.3.7; python_version < '3.4'
+
+# Markdown parsing for duplicate detection
+markdown>=3.4
+beautifulsoup4>=4.12.0
+lxml>=4.9.0
+
+# Text similarity for consolidation
+difflib  # Built-in, no install needed
+#
+ Optional: for advanced similarity
+# scikit-learn>=1.3.0
+# nltk>=3.8
+
+# Git operations
+gitpython>=3.1.40
+
+# Progress bars for large projects
+tqdm>=4.66.0
+
+# CLI argument parsing
+click>=8.1.0
+
+# Date/time handling
+python-dateutil>=2.8.2
+
+# Optional: LLM integration for file purpose detection
+# openai>=1.0.0
+# anthropic>=0.8.0
