@@ -1,4 +1,6 @@
-# xswarm-tdd-claude
+# xswarm-tdd
+
+### Config for Coaxing TDD out of Claude Code
 
 > *"I spent months yelling at an AI about Test-Driven Development. This is what survived."*
 
@@ -236,7 +238,7 @@ Skills only wake up when they're needed. Claude scans each skill's description (
 [ -d ~/.claude ] && mv ~/.claude ~/.claude.backup
 
 # Clone this repo as your global config
-git clone https://github.com/chadananda/xswarm-tdd-claude.git ~/.claude
+git clone https://github.com/chadananda/xswarm-tdd.git ~/.claude
 ```
 
 ### The Picky Way
