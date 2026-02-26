@@ -1,49 +1,32 @@
-# TDD Protocol — Strict Red-Green-Refactor
+# TDD — Red-Green-Refactor
 
 ## Rules
+1. Never implement without failing test first — proves requirement exists and implementation satisfies it.
+2. One test at a time — isolates failures to single behavior.
+3. Run tests every phase — execution is proof, assumptions aren't.
+4. Minimum code to pass — over-engineering makes refactoring harder and tests less meaningful.
+5. Test fails → fix code, not test — changing tests hides bugs. Only change if expectation wrong; state why.
+6. Refactor = structure only — behavioral changes without test updates create silent regressions. Test breaks → undo.
+7. Report each phase — audit trail catches skipped steps: 🔴 RED (test+failure) → 🟢 GREEN (change+pass) → 🔵 REFACTOR (improvement+pass)
 
-1. **Never write implementation without a failing test.** A failing test proves the requirement exists and that the implementation will satisfy it. Without this, you're guessing.
-2. **One test at a time.** Keeps the feedback loop tight and isolates failures to a single behavior. Multiple tests at once obscure which change broke what.
-3. **Run tests at every phase.** Assumptions about test outcomes are unreliable — execution is proof. Never say "this would fail" — show it.
-4. **Minimum code to pass.** Over-engineering makes later refactoring harder and tests less meaningful. Don't anticipate future tests; triangulate via successive tests.
-5. **When a test fails, fix the code — not the test.** Changing tests to match broken code hides bugs. Only change a test if the expectation itself was wrong, and state why before changing it.
-6. **Refactoring changes structure, not behavior.** Behavioral changes without corresponding test updates create silent regressions. If a test breaks during refactor, undo.
-7. **Report each phase explicitly.** Explicit reporting creates an audit trail and catches skipped steps:
-   - 🔴 RED: test name + failure output
-   - 🟢 GREEN: what changed + all tests pass
-   - 🔵 REFACTOR: what improved + all tests pass
+## Anti-Patterns
+- Test + implementation same step — can't verify test detects failure if never seen failing.
+- Hardcoding returns for multiple tests — false confidence without solving problem.
+- Tests after implementation — post-hoc tests rationalize, don't specify.
+- Batch tests then implement — loses red-green feedback loop.
+- Skip test execution — unexecuted tests are just comments.
 
-## Anti-Patterns — Hard No
+## BDD
+`describe` = context; `it` = "should [behavior]". Name by behavior not implementation — impl-coupled names break on refactor. Body: given → when → then. One assertion; independent; deterministic — multiple assertions obscure which behavior failed.
 
-- **Writing test + implementation in the same step** — can't verify the test actually detects failure if you never see it fail.
-- **Hardcoding returns to pass multiple tests** — passes tests without solving the actual problem; creates false confidence.
-- **Writing tests after implementation** — post-hoc tests rationalize existing code instead of specifying behavior.
-- **Batch-writing tests then implementing** — loses the red-green feedback loop that guides incremental design.
-- **Skipping test execution** — unexecuted tests provide zero information; they're just comments.
-
-## BDD Conventions
-
-- `describe` = subject or scenario context; `it` = "it should [behavior]"
-- **Name tests by observable behavior, not implementation details.** Implementation-coupled names break when code is refactored even though behavior hasn't changed.
-- Structure test bodies: `// given` → `// when` → `// then`
-- **One logical assertion per test; tests must be independent and deterministic.** Multiple assertions obscure which behavior failed; dependent tests create cascading false failures.
-
-### Web Projects: Gherkin + Playwright
-
-For web projects, use Gherkin feature files with Playwright step definitions:
-- Feature files describe user behavior in business language
-- Step definitions use ARIA-first locators (`getByRole`, `getByLabel`, `getByText`)
-- Never use XPath, deep CSS, or class-name selectors in step definitions
-- Every scenario includes an accessibility assertion (axe-core WCAG 2.1 AA)
-- See `bdd-playwright` skill for full patterns and examples
+### Web: Gherkin + Playwright
+Feature files in business language. ARIA-first locators (`getByRole`, `getByLabel`, `getByText`). No XPath/CSS-class selectors. axe-core a11y per scenario. See bdd-playwright skill.
 
 ## Workflow
-
-1. Restate requirement → identify smallest testable increments
-2. Outer loop: write failing acceptance test (stays red across multiple unit cycles)
-3. Inner loop: 🔴→🟢→🔵 at unit level until acceptance test goes green
-4. Refactor the whole; run full suite; stay green
+1. Restate requirement → smallest testable increments
+2. Outer: failing acceptance test (stays red across unit cycles)
+3. Inner: 🔴→🟢→🔵 until acceptance green
+4. Refactor whole; full suite; stay green
 
 ## Spikes
-
-**Spike code is throwaway.** Learn from it, delete it, start fresh with TDD. Promoting spike code bypasses the test-driven design process, producing untested code with accidental complexity baked in.
+Spike = throwaway. Learn, delete, TDD fresh — promoting spike code bypasses test-driven design, bakes in accidental complexity.
