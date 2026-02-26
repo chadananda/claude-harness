@@ -45,15 +45,20 @@ This repo applies both to Claude Code's `~/.claude` configuration. The harness i
 
 ### Token Budget
 
-The harness was compressed from 1,266 lines to 296 lines (77% reduction) while retaining all rules with principled rationale:
+The harness uses **dynamic mode-based context loading** — inspired by Anthropic's "just-in-time context retrieval" pattern from their [context engineering guide](https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents): *"maintain lightweight identifiers and dynamically load data at runtime using tools."*
 
-| Layer | Lines | Loaded When |
-|-------|-------|-------------|
-| CLAUDE.md + @-includes | 28 | Every conversation |
-| MEMORY.md | 17 | Every conversation (project-scoped) |
-| **Always-loaded total** | **45** | |
-| Agent files (6 agents + TDD.md) | 251 | Per spawn |
-| Skills (20 directories) | On-demand | Only when triggered |
+| Scenario | Context Loaded | Lines |
+|----------|---------------|-------|
+| Ad-hoc / questions / file ops | CLAUDE.md only | ~15 |
+| Feature dev | CLAUDE.md + modes/dev.md | ~40 |
+| Documentation | CLAUDE.md + modes/doc.md | ~25 |
+| Planning | CLAUDE.md + modes/plan.md | ~25 |
+| Code review | CLAUDE.md + modes/review.md | ~25 |
+| SEO analysis | CLAUDE.md + modes/seo.md + refs on demand | ~45 + ~40-60/ref |
+| Agent files (6 agents + TDD.md) | Per spawn | 251 |
+| Skills (20 directories) | On-demand | — |
+
+Most work (ad-hoc tasks, questions, file ops) pays **zero mode overhead**. Modes can be arbitrarily rich without taxing unrelated work. New modes are just a markdown file — no code changes.
 
 ---
 
@@ -76,12 +81,30 @@ Left to its own devices, Claude will also:
 ### `CLAUDE.md` — The Orchestrator
 
 ```
-CLAUDE.md (10 lines)
-  ├── @CLAUDE_workflow.md   "how to work"  (10 lines)
-  └── @CLAUDE_agents.md     "who does what" (8 lines)
+CLAUDE.md (~15 lines)
+  └── modes/           "structured workflows, loaded on demand"
+      ├── dev.md       "TDD, agents, tasks, teams" (~25 lines)
+      ├── plan.md      "architecture, decomposition" (~10 lines)
+      ├── doc.md       "documentation rules" (~10 lines)
+      └── review.md    "code review criteria" (~10 lines)
 ```
 
-The orchestrator's entire job is routing. Simple task? Handle it. Complex project? Call `/plan`. Tasks come back? Farm them out. Twenty-eight lines total. Every byte gets loaded into every conversation, so it's on a strict diet.
+The orchestrator's entire job is routing. Simple task? Handle it directly — no mode needed. Complex feature? Claude classifies the activity, reads the corresponding mode file (one Read call), and follows the enriched workflow. Ad-hoc tasks, questions, OS help, brainstorming — just Claude being Claude, zero overhead.
+
+### Mode-Based Dynamic Context
+
+**No hook needed for detection.** Claude reads the user's prompt, classifies the activity, and reads the corresponding mode file. This is simpler and more accurate than keyword regex.
+
+| Mode | When | What Loads |
+|------|------|------------|
+| *(none)* | **Most work** | **Nothing extra** |
+| **dev** | Building features | TDD, agents, tasks, teams, YAGNI, style |
+| **plan** | Architecture/design | Planning methodology, decomposition |
+| **doc** | Writing docs | Documentation rules, placement, structure |
+| **review** | Reviewing code | Review criteria, YAGNI checks, minimize |
+| **seo** | SEO analysis | E-E-A-T, CWV, schema, GEO + reference files |
+
+Explicit `*dev`, `*doc`, `*plan`, `*review`, `*seo` override classification. No command or no match = no mode loaded.
 
 ### The Agent Pipeline
 
@@ -130,10 +153,10 @@ This is the other half of inverting the human-AI relationship. Without it, Claud
 Lives at `agents/TDD.md` (32 lines). Loaded by every coding agent via `@TDD.md`. Non-negotiable.
 
 ```
-  🔴 RED → Write ONE failing test. Watch it fail.
-  🟢 GREEN → Minimum code to pass. Not what you think you'll need later.
-  🔵 REFACTOR → Clean up. Tests still pass? Good. If not, undo.
-  ↩ Repeat. One test at a time.
+  RED → Write ONE failing test. Watch it fail.
+  GREEN → Minimum code to pass. Not what you think you'll need later.
+  REFACTOR → Clean up. Tests still pass? Good. If not, undo.
+  Repeat. One test at a time.
 ```
 
 **Why not just say "Do TDD" in the prompt?** Because by the fifth feature, that instruction is buried under 200k tokens and Claude has reverted to its "write everything at once" instinct. Prompts drift. Architecture doesn't. Each agent invocation gets a *fresh* context with TDD at high priority.
@@ -144,11 +167,22 @@ Lives at `agents/TDD.md` (32 lines). Loaded by every coding agent via `@TDD.md`.
 
 ```
 ~/.claude/
-├── CLAUDE.md                     # 10-line orchestrator
-├── CLAUDE_workflow.md            # Autonomy, tasks, teams (10 lines)
-├── CLAUDE_agents.md              # Agent roster + safety rules (8 lines)
+├── CLAUDE.md                     # ~15-line orchestrator with mode table
 ├── settings.json                 # Permissions, hooks, env vars
 ├── notify.py                     # Desktop notification on agent completion
+│
+├── modes/                        # Dynamic context (loaded on demand)
+│   ├── dev.md                   # TDD, agents, tasks, teams (~25 lines)
+│   ├── plan.md                  # Architecture, decomposition (~10 lines)
+│   ├── doc.md                   # Documentation rules (~10 lines)
+│   ├── review.md                # Code review criteria (~10 lines)
+│   ├── seo.md                   # SEO methodology + scoring (~45 lines)
+│   └── seo/                     # SEO reference files (loaded on demand)
+│       ├── cwv.md               # Core Web Vitals thresholds
+│       ├── schema.md            # Schema.org type status + deprecations
+│       ├── eeat.md              # E-E-A-T evaluation framework
+│       ├── quality-gates.md     # Content quality minimums
+│       └── geo.md               # AI search / GEO optimization
 │
 ├── agents/                       # The team (251 lines total)
 │   ├── TDD.md                   # Shared protocol (32 lines)
@@ -162,7 +196,7 @@ Lives at `agents/TDD.md` (32 lines). Loaded by every coding agent via `@TDD.md`.
 ├── commands/                     # Slash commands
 │   ├── commit.md                # Trunk-style git workflow
 │   ├── review.md                # Multi-agent code review
-│   ├── seo.md                   # Markdown SEO analysis
+│   ├── seo.md                   # SEO analysis suite (activates seo mode)
 │   ├── validate-product.md      # Startup idea validation
 │   └── cleanup-tmp.md           # Janitor duty
 │
@@ -219,13 +253,16 @@ Removed content duplicating system context (plugin lists, skill references, team
 ### Round 3: Terse + Principled (640 → 296 lines)
 Dropped articles, filler words, verbose sentence structure. Adopted `Rule — reason.` format throughout. Every rule *gained* a rationale clause while the total line count *dropped* — because the filler removed was worth far more than the reasons added.
 
-| What | Round 1 | Round 2 | Round 3 | Reduction |
-|------|---------|---------|---------|-----------|
-| Always-loaded (CLAUDE.md chain) | 181 | 68 | 45 | 75% |
-| Agent pool (all 7 files) | 1,066 | 464 | 251 | 76% |
-| **Total harness** | **1,266** | **640** | **296** | **77%** |
+### Round 4: Dynamic Modes (static → on-demand)
+Replaced static `@-includes` with mode-based dynamic context loading. CLAUDE.md shrunk from 28 lines (with workflow + agents includes) to ~15 lines. Mode content moved to `modes/` — loaded only when the activity matches. Ad-hoc work pays zero overhead. Inspired by [Carl](https://github.com/ChristopherKahler/carl) but using Claude's own classification instead of keyword regex hooks.
 
-**The takeaway:** Agent instructions load on every invocation. A 500-line agent burns 2,000+ tokens before doing any work. But the answer isn't stripping reasons to save tokens — it's stripping everything *except* rules and reasons. Principles are load-bearing structure. Templates, examples, and re-explanations of model knowledge are scaffolding you can remove once the building stands.
+| What | Round 1 | Round 2 | Round 3 | Round 4 |
+|------|---------|---------|---------|---------|
+| Always-loaded (CLAUDE.md) | 181 | 68 | 45 | ~15 |
+| Mode/workflow content | — | — | (in always-loaded) | ~55 + ~231 refs (on-demand) |
+| Agent pool (all 7 files) | 1,066 | 464 | 251 | 251 |
+
+**The takeaway:** Agent instructions load on every invocation. A 500-line agent burns 2,000+ tokens before doing any work. But the answer isn't stripping reasons to save tokens — it's stripping everything *except* rules and reasons, and loading context *only when it's needed*. Principles are load-bearing structure. Templates, examples, and re-explanations of model knowledge are scaffolding you can remove once the building stands.
 
 ---
 
@@ -247,6 +284,7 @@ Cherry-pick what you want. The system is modular:
 - Just want TDD? Grab `agents/TDD.md` and reference it from your agents.
 - Just want the pipeline? Take the `agents/` folder.
 - Just want skills? Copy individual skill folders into `~/.claude/skills/`.
+- Just want modes? Copy `modes/` and the mode table from CLAUDE.md.
 
 ### Requirements
 
@@ -257,6 +295,21 @@ Cherry-pick what you want. The system is modular:
 ---
 
 ## Design Decisions
+
+<details>
+<summary><b>Why dynamic modes instead of static @-includes?</b></summary>
+Static includes load ~45 lines into every conversation whether needed or not. Most conversations (questions, file ops, brainstorming) don't need TDD rules or agent rosters. Dynamic modes load structured workflows only when the activity warrants it — typically saving 67% on ad-hoc work while enabling richer mode content without taxing unrelated tasks.
+</details>
+
+<details>
+<summary><b>Why Claude classification instead of keyword hooks?</b></summary>
+Keyword regex (like Carl's approach) misfires on ambiguous words and requires maintaining a Python hook. Claude itself is the best classifier — it understands intent, not just keywords. Zero external scripting, perfect accuracy, ~10 lines in CLAUDE.md.
+</details>
+
+<details>
+<summary><b>Why does the SEO mode have reference sub-files?</b></summary>
+SEO requires domain knowledge Claude doesn't have natively — deprecated schema types, current CWV thresholds, GEO statistics, quality gates. The mode file (~45 lines) loads methodology and critical rules. Reference files (~231 lines across 5 files) load on demand per analysis category. Inspired by <a href="https://github.com/AgriciDaniel/claude-seo">claude-seo</a>, distilled from ~1,500 lines to ~276 lines of high-signal content.
+</details>
 
 <details>
 <summary><b>Why merge Critic + Refactor into one Reviewer?</b></summary>
@@ -288,6 +341,8 @@ Tasks already provide DAG dependencies, status tracking, and blocking semantics.
 
 **Want to add agents?** Create a `.md` file in `agents/` with YAML frontmatter (name, description, tools, model).
 
+**Want to add a mode?** Create a `.md` file in `modes/` and add a row to the mode table in CLAUDE.md. No code changes needed.
+
 **Want project-specific behavior?** Create `.claude/CLAUDE.md` in your project root. Project-level instructions override global ones.
 
 ---
@@ -300,6 +355,7 @@ This repo is the petri dish for [xswarm](https://xswarm.ai) — an autonomous ag
 - **Stuck protocol** — agents that can't guess eliminated more wasted time than any other change.
 - **TDD enforcement** — making test-first structural, not aspirational, changed everything.
 - **Harness compression** — token efficiency is an architecture concern, not an optimization.
+- **Dynamic modes** — just-in-time context loading eliminates overhead for work that doesn't need structured workflows.
 
 Watch [xswarm.ai](https://xswarm.ai) for where this is heading: multi-agent orchestration for any software development task.
 

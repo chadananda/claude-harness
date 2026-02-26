@@ -37,3 +37,4 @@ todos/
 history.jsonl
 stats-cache.json
 settings.local.json
+.current-mode

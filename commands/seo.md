@@ -1,66 +1,25 @@
-Rigorously assess a markdown article for SEO and readability improvements.
+Comprehensive SEO analysis. Activates seo mode — read `modes/seo.md` first for methodology, scoring, and critical rules. Load reference files from `modes/seo/` as needed during analysis.
 
-## Analysis Steps
+## Commands
 
-1. **Read the article file**
-   ```bash
-   cat "[filename]"
-   ```
+| Command | What |
+|---------|------|
+| `/seo <url>` | Full site audit (technical, content, schema, CWV, GEO) |
+| `/seo page <url>` | Deep single-page analysis |
+| `/seo <file>` | Analyze markdown article for SEO and readability |
+| `/seo geo <url>` | AI search / GEO optimization analysis |
+| `/seo schema <url>` | Schema markup detection, validation, generation |
+| `/seo technical <url>` | Technical SEO audit (crawlability, indexability, CWV, security) |
+| `/seo content <url>` | E-E-A-T and content quality analysis |
+| `/seo plan <type>` | Strategic SEO plan (saas, local, ecommerce, publisher, agency) |
 
-2. **Extract metadata and structure**
-   - Title (H1)
-   - Headings hierarchy (H2-H6)
-   - Word count
-   - Image alt texts
-   - Internal/external links
-   - Meta description (if present)
+## Workflow
 
-3. **SEO Analysis**
-   - Title length (50-60 characters optimal)
-   - Title keyword placement
-   - Heading structure and keyword distribution
-   - Content length (1000+ words for depth)
-   - Keyword density (avoid over-optimization)
-   - Image optimization (alt text, file names)
-   - Internal linking opportunities
-   - URL/filename optimization
+1. Read `modes/seo.md` for methodology and critical rules
+2. Fetch target with WebFetch. Detect business type from homepage signals.
+3. Load relevant reference files (`modes/seo/{cwv,schema,eeat,quality-gates,geo}.md`) for the analysis categories needed
+4. Analyze across 7 weighted categories. Score 0-100.
+5. Prioritize: Critical → High → Medium → Low
+6. Output actionable report — specific fixes, not vague advice. Lead with quick wins.
 
-4. **Readability Analysis**
-   - Sentence length variation
-   - Paragraph length (3-4 sentences ideal)
-   - Flesch Reading Ease score
-   - Use of transition words
-   - Active vs passive voice
-   - Subheading frequency (every 150-300 words)
-   - Bullet points and lists usage
-   - Clear introduction and conclusion
-
-5. **Content Quality Checks**
-   - Unique value proposition
-   - Comprehensive topic coverage
-   - Actionable insights
-   - Supporting examples/data
-   - Clear call-to-action
-   - Mobile readability
-
-6. **Technical SEO**
-   - Proper markdown syntax
-   - Broken link check
-   - Image file sizes
-   - Schema markup opportunities
-   - Meta tags recommendations
-
-7. **Competitor Research** (if needed)
-   - Search for similar content ranking well
-   - Identify content gaps
-   - Analyze top-ranking structure
-
-## Output Format
-
-Provide a comprehensive report with:
-- **SEO Score**: X/100
-- **Readability Score**: X/100
-- **Priority Issues** (fix immediately)
-- **Recommendations** (improvements)
-- **Strengths** (what's working well)
-- **Suggested Rewrites** (specific examples)
+For markdown files: extract structure, check headings, word count, readability, keyword placement, internal linking, then apply quality gates from reference files.
