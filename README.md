@@ -1,6 +1,6 @@
-# xswarm-tdd
+# claude-harness
 
-### Harness Engineering for Claude Code
+### Principles-First Harness Engineering for Claude Code
 
 > *"The smallest set of high-signal tokens that maximize the likelihood of some desired outcome."*
 > — Anthropic, [Effective Context Engineering for AI Agents](https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents)
@@ -238,7 +238,7 @@ Dropped articles, filler words, verbose sentence structure. Adopted `Rule — re
 [ -d ~/.claude ] && mv ~/.claude ~/.claude.backup
 
 # Clone as your global config
-git clone https://github.com/chadananda/xswarm-tdd.git ~/.claude
+git clone https://github.com/chadananda/claude-harness.git ~/.claude
 ```
 
 ### The Picky Way
