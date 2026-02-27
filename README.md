@@ -11,6 +11,8 @@ It's also the experimental playground for [xswarm](https://xswarm.ai) coding age
 
 **Author:** Chad Jones / [xswarm.ai](https://xswarm.ai) / [chadananda@gmail.com](mailto:chadananda@gmail.com)
 
+> **Just want to see what's here?** Jump to the [Table of Contents](#table-of-contents).
+
 ---
 
 ## The Problem: CLAUDE.md Is a Multiplier
@@ -359,7 +361,7 @@ Each phase loads only its relevant references (~60-140 lines), not the full ~790
 
 ## Skills — Lazy-Loaded Capabilities
 
-Skills only wake up when relevant. Claude scans each skill's description (~100 tokens) and ignores the rest until triggered. 21 skills cost almost nothing at idle.
+Skills only wake up when relevant. Claude scans each skill's description (~100 tokens) and ignores the rest until triggered. 23 skills cost almost nothing at idle.
 
 ```
 skills/
@@ -388,7 +390,8 @@ skills/
     ├── mcp-builder/             # MCP server dev guide
     ├── project-cleanup/         # Organize messy projects
     ├── tui-viewer/              # TUI screenshot verification
-    └── webapp-testing/          # Playwright browser testing
+    ├── webapp-testing/          # Playwright browser testing
+    └── xswarm-subconscious/     # Persistent memory across sessions
 ```
 
 **Skill sources:** [Anthropic](https://github.com/anthropics/skills) • [Superpowers](https://github.com/obra/superpowers) (MIT) • [Trail of Bits](https://github.com/trailofbits/skills) (CC BY-SA 4.0)
@@ -492,7 +495,7 @@ A monolithic CLAUDE.md with all domain knowledge loads everything into every con
 
 <details>
 <summary><b>Why Claude classification instead of keyword hooks?</b></summary>
-Keyword regex (like Carl's approach) misfires on ambiguous words and requires maintaining a Python hook. Claude itself is the best classifier — it understands intent, not just keywords. Zero external scripting, perfect accuracy, ~10 lines in CLAUDE.md.
+Keyword regex misfires on ambiguous words and requires maintaining a Python hook. Claude itself is the best classifier — it understands intent, not just keywords. Zero external scripting, perfect accuracy, ~10 lines in CLAUDE.md.
 </details>
 
 <details>
