@@ -10,6 +10,7 @@ Optional structured workflows. Load ONLY when the request clearly fits a mode �
 | doc | documentation, READMEs, content writing | modes/doc.md |
 | review | code review, audits, quality checks | modes/review.md |
 | seo | SEO analysis, site audits, content optimization, GEO | modes/seo.md |
+| plan-saas | SaaS project planning (idea → launch-ready) | modes/plan-saas.md |
 
 Explicit *dev, *doc, *plan, *review, *seo activate a mode. No command or no match = no mode loaded.
 Ad-hoc tasks, questions, file ops, OS help, brainstorming — just work directly. No mode needed.

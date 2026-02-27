@@ -55,8 +55,9 @@ The harness uses **dynamic mode-based context loading** — inspired by Anthropi
 | Planning | CLAUDE.md + modes/plan.md | ~25 |
 | Code review | CLAUDE.md + modes/review.md | ~25 |
 | SEO analysis | CLAUDE.md + modes/seo.md + refs on demand | ~45 + ~40-60/ref |
+| SaaS planning | CLAUDE.md + mode + skill + phase refs on demand | ~75 + ~60-140/phase |
 | Agent files (6 agents + TDD.md) | Per spawn | 251 |
-| Skills (20 directories) | On-demand | — |
+| Skills (21 directories) | On-demand | — |
 
 Most work (ad-hoc tasks, questions, file ops) pays **zero mode overhead**. Modes can be arbitrarily rich without taxing unrelated work. New modes are just a markdown file — no code changes.
 
@@ -103,6 +104,7 @@ The orchestrator's entire job is routing. Simple task? Handle it directly — no
 | **doc** | Writing docs | Documentation rules, placement, structure |
 | **review** | Reviewing code | Review criteria, YAGNI checks, minimize |
 | **seo** | SEO analysis | E-E-A-T, CWV, schema, GEO + reference files |
+| **plan-saas** | SaaS project planning | 4-phase pipeline + 9 reference files on demand |
 
 Explicit `*dev`, `*doc`, `*plan`, `*review`, `*seo` override classification. No command or no match = no mode loaded.
 
@@ -146,6 +148,44 @@ Every agent is hardwired to escalate the moment anything goes wrong. No fallback
 
 This is the other half of inverting the human-AI relationship. Without it, Claude guesses when confused and hands you broken output to debug. With it, Claude stops and asks a *specific question with options*. Your role shifts from "unpaid QA" to "technical decision-maker."
 
+### SaaS Project Planner (`/plan-saas`)
+
+A comprehensive skill that takes a SaaS idea from napkin sketch to implementation-ready repo with a 12-month marketing calendar. Four linear phases, each producing a deliverable document that feeds into the next:
+
+```
+Phase 1: VALIDATE        Phase 2: STRATEGY       Phase 3: TECHNICAL      Phase 4: MARKETING
+┌────────────────┐      ┌────────────────┐      ┌────────────────┐      ┌────────────────┐
+│ 6-question     │      │ 5-layer ICP    │      │ Tech stack     │      │ Keyword        │
+│ interview with │─────▶│ Positioning    │─────▶│ MVP scope      │─────▶│ universe       │
+│ web research   │      │ Pricing        │      │ User stories   │      │ Content        │
+│ 5-factor score │      │ research       │      │ Architecture   │      │ calendar       │
+│                │      │                │      │ Milestones     │      │ Guerrilla plan │
+│ → viability-   │      │ → strategy-    │      │ → software-    │      │ → marketing-   │
+│   report.md    │      │   brief.md     │      │   prd.md       │      │   prd.md       │
+└────────────────┘      └────────────────┘      └────────────────┘      └────────────────┘
+  Score ≥10 to proceed
+```
+
+**Phase 1 (Validate)** absorbs the standalone `/validate-product` command. Conducts a tough-love interview — one question at a time with WebSearch between each to research competitors, market data, and channels. Scores across Product, Acquisition, Market, Defendability, and Buildability (0-3 each, multiplicative). A score under 10 means iterate before proceeding.
+
+**Phase 2 (Strategy)** develops the Ideal Customer Profile using a 5-layer model (problem identity → buyer profile → psychographics → watering holes → buying behavior), creates a positioning framework with tagline and elevator pitch, and researches competitor pricing pages to recommend specific tiers and prices.
+
+**Phase 3 (Technical)** recommends an opinionated tech stack (Vue/Svelte over React, PostgreSQL default, PaaS hosting, managed auth/payments), scopes the MVP ruthlessly with MoSCoW, writes user stories with acceptance criteria, and estimates infrastructure costs.
+
+**Phase 4 (Marketing)** produces the complete GTM playbook: 20-30 keyword universe (BOFU/MOFU/TOFU), pillar/cluster content architecture, 12-week content calendar with specific article titles, guerrilla marketing tactics (build-in-public, viral waitlist, community infiltration, Product Hunt), channel strategy with ICP-tied reasoning, 12-week launch sequence with hour-by-hour launch day plan, email sequences, and a metrics dashboard with north star metric.
+
+The skill uses 9 RAG-loaded reference files (~800 lines of domain knowledge) covering scoring rubrics, ICP frameworks, pricing models, tech stacks, SEO strategy, content marketing, guerrilla tactics, distribution channels, and launch sequencing. All loaded on demand per phase — zero cost when not in use.
+
+```
+skills/plan-saas/           # 18 files, ~1,770 lines
+├── SKILL.md                # Orchestrator: routing, phase state, commands
+├── skills/                 # 4 phase sub-skills (~710 lines)
+├── references/             # 9 domain knowledge files (~790 lines)
+└── templates/              # 4 output document templates (~190 lines)
+```
+
+**Commands:** `/plan-saas [idea]` runs the full pipeline. `/plan-saas validate`, `strategy`, `technical`, `marketing` run individual phases. `/plan-saas resume` detects last completed phase and continues.
+
 ---
 
 ## The TDD Protocol
@@ -177,6 +217,7 @@ Lives at `agents/TDD.md` (32 lines). Loaded by every coding agent via `@TDD.md`.
 │   ├── doc.md                   # Documentation rules (~10 lines)
 │   ├── review.md                # Code review criteria (~10 lines)
 │   ├── seo.md                   # SEO methodology + scoring (~45 lines)
+│   ├── plan-saas.md             # SaaS project planning (~8 lines)
 │   └── seo/                     # SEO reference files (loaded on demand)
 │       ├── cwv.md               # Core Web Vitals thresholds
 │       ├── schema.md            # Schema.org type status + deprecations
@@ -204,9 +245,10 @@ Lives at `agents/TDD.md` (32 lines). Loaded by every coding agent via `@TDD.md`.
 │   ├── warn-root-files.py       # Block non-config files in project root
 │   └── cleanup-tmp-scripts.py   # Tidy up after task completion
 │
-└── skills/                       # 20 on-demand capabilities
+└── skills/                       # 21 on-demand capabilities
     ├── [Development Workflow]
     │   ├── plan/                 # Requirements + task decomposition
+    │   ├── plan-saas/            # SaaS idea → launch-ready (4-phase pipeline)
     │   ├── bdd-playwright/       # Gherkin + ARIA locators + axe-core
     │   ├── systematic-debugging/ # 4-phase root cause analysis
     │   ├── using-git-worktrees/  # Parallel branch isolation
@@ -309,6 +351,11 @@ Keyword regex (like Carl's approach) misfires on ambiguous words and requires ma
 <details>
 <summary><b>Why does the SEO mode have reference sub-files?</b></summary>
 SEO requires domain knowledge Claude doesn't have natively — deprecated schema types, current CWV thresholds, GEO statistics, quality gates. The mode file (~45 lines) loads methodology and critical rules. Reference files (~231 lines across 5 files) load on demand per analysis category. Inspired by <a href="https://github.com/AgriciDaniel/claude-seo">claude-seo</a>, distilled from ~1,500 lines to ~276 lines of high-signal content.
+</details>
+
+<details>
+<summary><b>Why is plan-saas a skill with reference files instead of a single prompt?</b></summary>
+A 4-phase SaaS planning workflow with domain knowledge (scoring rubrics, pricing models, launch tactics) would be ~1,800 lines as a single file — loaded into every conversation whether needed or not. As a skill with 9 RAG-loaded reference files, only the orchestrator (~75 lines) loads at detection time. Each phase reads its specific references on demand (~60-140 lines). Same pattern as the SEO mode but at larger scale: domain knowledge Claude doesn't have natively, loaded just-in-time per phase.
 </details>
 
 <details>
