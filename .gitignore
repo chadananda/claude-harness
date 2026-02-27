@@ -17,6 +17,11 @@ __pycache__/
 *.png
 !assets/*.png
 
+# user-local (not shared)
+settings.json
+backups/
+skills/webapp-testing/capture_*.py
+
 # claude-managed (not user files)
 backup/
 cache/

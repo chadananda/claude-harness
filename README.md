@@ -283,7 +283,7 @@ Phase 1: VALIDATE        Phase 2: STRATEGY       Phase 3: TECHNICAL      Phase 4
 ```
 
 ### Phase 1: Validate
-Absorbs the standalone `/validate-product` command. Tough-love interview — one question at a time with WebSearch between each to research competitors, market data, and channels. Scores across 5 factors (0-3 each, multiplicative):
+Tough-love interview — one question at a time with WebSearch between each to research competitors, market data, and channels. Scores across 5 factors (0-3 each, multiplicative):
 
 | Factor | What it measures | Score 3 example |
 |--------|-----------------|-----------------|
