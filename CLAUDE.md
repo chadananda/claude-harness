@@ -7,12 +7,13 @@ Optional structured workflows. Load ONLY when the request clearly fits a domain 
 |--------|------|------|
 | dev | implementation, features, coding, TDD, refactoring | domains/dev.md |
 | plan | architecture, system design, project planning | domains/plan.md |
-| doc | documentation, READMEs, content writing | domains/doc.md |
+| doc | documentation, READMEs, JSDoc, technical writing | domains/doc.md |
+| content | blog posts, articles, content writing, copywriting | domains/content.md |
 | review | code review, audits, quality checks | domains/review.md |
 | seo | SEO analysis, site audits, content optimization, GEO | domains/seo.md |
 | plan-saas | SaaS project planning (idea → launch-ready) | domains/plan-saas.md |
 
-Explicit *dev, *doc, *plan, *review, *seo activate a domain. No command or no match = no domain loaded.
+Explicit *dev, *doc, *content, *plan, *review, *seo activate a domain. No command or no match = no domain loaded.
 Ad-hoc tasks, questions, file ops, OS help, brainstorming — just work directly. No domain needed.
 
 ## Conventions

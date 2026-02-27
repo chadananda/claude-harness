@@ -5,7 +5,7 @@
 > *"The smallest set of high-signal tokens that maximize the likelihood of some desired outcome."*
 > — Anthropic, [Effective Context Engineering for AI Agents](https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents)
 
-This is my actual `~/.claude` folder — the one I use every day for real work. It's a **harness**: a domain-aware orchestration system with six specialized domains that load rich, domain-specific workflows on demand while paying zero context cost when idle. TDD-enforced coding agents, SEO analysis with current-year knowledge, end-to-end SaaS planning — each domain brings deep expertise without polluting the others.
+This is my actual `~/.claude` folder — the one I use every day for real work. It's a **harness**: a domain-aware orchestration system with seven specialized domains that load rich, domain-specific workflows on demand while paying zero context cost when idle. TDD-enforced coding agents, SEO analysis with current-year knowledge, end-to-end SaaS planning — each domain brings deep expertise without polluting the others.
 
 It's also the experimental playground for [xswarm](https://xswarm.ai) coding agents — autonomous agent swarms for software development.
 
@@ -55,7 +55,7 @@ The shallow compromise is the natural consequence of a monolithic CLAUDE.md. Dep
 
 ### The Way Out
 
-The solution is not better writing. It is not more aggressive compression. It is not finding the perfect 50 words that somehow encode deep expertise across six domains. You cannot compress your way out of a multiplier problem.
+The solution is not better writing. It is not more aggressive compression. It is not finding the perfect 50 words that somehow encode deep expertise across seven domains. You cannot compress your way out of a multiplier problem.
 
 The solution is **isolation.** Each domain loads its own deep expertise only when that expertise is relevant, and pays zero cost — zero tokens, zero attention, zero dilution — when it isn't. A coding session loads TDD rules and agent pipelines. An SEO audit loads schema deprecations and Core Web Vitals thresholds. A SaaS planning session loads scoring rubrics and marketing frameworks. And none of them ever meet at the same cocktail party.
 
@@ -69,6 +69,7 @@ That's what domain switching does.
 - [dev](#dev--software-development) — TDD, agent pipeline, teams, stuck protocol
 - [plan](#plan--project-planning) — Requirements gathering, task decomposition
 - [doc](#doc--documentation) — Documentation rules, placement, structure
+- [content](#content--blog--article-writing) — SEO headers, readability, image placement, linking
 - [review](#review--code-review) — Code review criteria, YAGNI, minimization
 - [seo](#seo--seo-analysis) — E-E-A-T, CWV, schema, GEO + reference files
 - [plan-saas](#plan-saas--saas-project-planner) — 4-phase pipeline: validate → strategy → technical → marketing
@@ -102,6 +103,7 @@ This harness solves the multiplier problem by keeping CLAUDE.md to **~15 lines**
      │  ├── dev.md          ~25 lines + 251 lines agents  │
      │  ├── plan.md         ~10 lines                     │
      │  ├── doc.md          ~10 lines                     │
+     │  ├── content.md      ~45 lines                     │
      │  ├── review.md       ~10 lines                     │
      │  ├── seo.md          ~45 lines + ~231 lines refs   │
      │  └── plan-saas.md    ~8 lines + ~1,770 lines refs  │
@@ -117,6 +119,7 @@ This harness solves the multiplier problem by keeping CLAUDE.md to **~15 lines**
 | Ad-hoc / questions / file ops | CLAUDE.md only | ~15 |
 | Feature development | CLAUDE.md + domains/dev.md | ~40 |
 | Documentation | CLAUDE.md + domains/doc.md | ~25 |
+| Blog / article writing | CLAUDE.md + domains/content.md | ~60 |
 | Project planning | CLAUDE.md + domains/plan.md | ~25 |
 | Code review | CLAUDE.md + domains/review.md | ~25 |
 | SEO analysis | CLAUDE.md + domains/seo.md + refs | ~45 + ~40-60/ref |
@@ -218,6 +221,23 @@ Interactive requirements gathering and task decomposition. Transforms vague requ
 **~10 lines loaded** on activation.
 
 Documentation rules, placement conventions, and structure. Keeps docs co-located with code, concise, and practical. JSDoc for inline documentation, README for each component/feature.
+
+---
+
+## content — Blog & Article Writing
+
+**~45 lines loaded** on activation.
+
+Methodology for writing blog posts and articles that rank and read well. Extracted from patterns proven across hundreds of published articles. The domain covers structure, SEO optimization, and quality — not topic-specific knowledge.
+
+**What it enforces:**
+
+- **SEO headers** — generic headers replaced with keyword-rich, action-oriented alternatives. "Introduction" becomes "Why [Topic] Transforms [Outcome]." Every H2 should contain the topic keyword and signal value to both readers and search engines.
+- **Structural rhythm** — H2 every 300-500 words, readability grade 8-12, 800-2500 word sweet spot. Structural cleanup: bold-as-header and HR dividers converted to real semantic headers.
+- **Description formula** — 150-160 characters, action verb first, value prop included. This is the search snippet that sells the click.
+- **Image placement framework** — not "one image every N words" but a decision framework: yes for concept transitions, complex ideas, emotional moments; no for minor transitions, simple lists, forced spacing. Quality over quantity.
+- **Cross-linking rules** — 3-10 internal links, max 1 per 150-200 words, first occurrence only, natural anchor text. Related articles section with thematic header, never generic "Related Articles."
+- **Quality gates** — a checklist: keyword-aware H2s, no 500+ word sections without subheaders, alt text on every image, 3-10 internal links, grade 8-12 readability, no orphan sections.
 
 ---
 
