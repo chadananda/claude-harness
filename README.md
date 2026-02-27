@@ -385,7 +385,11 @@ Before:  Run tests after EVERY change.
 After:   Run tests after EVERY change — catches regressions before they stack.
 ```
 
-The "before" version is a bare command. Under context pressure — long sessions, competing instructions, big codebases — Claude pattern-matches it and quietly drops it. The "after" version costs ~10 extra tokens but includes *why*. Claude defends reasoned rules because it understands what's at stake. That dash and its handful of words are the difference between a rule that holds and a rule that erodes.
+The "before" version is a bare command. Under context pressure — long sessions, competing instructions, big codebases — Claude pattern-matches it and quietly drops it. The "after" version costs ~10 extra tokens but includes *why*. That dash and its handful of words are the difference between a rule that holds and a rule that erodes.
+
+This isn't a trick we invented. It's how Anthropic trains Claude itself. Their [constitution](https://www.anthropic.com/news/claude-new-constitution) explicitly rejects rigid rules in favor of principled reasoning — an approach rooted in Aristotle's concept of *phronesis* (practical wisdom). The argument: rigid rules "can be applied poorly in unanticipated situations or when followed too rigidly." A model that understands *why* a rule exists can generalize to novel contexts. A model following bare commands can only pattern-match, and pattern-matching is brittle.
+
+The same dynamic plays out in your CLAUDE.md. A bare rule like "use semantic HTML" survives until Claude encounters a situation where a `<div>` is genuinely simpler — then it faces a bare command with no context for when exceptions are warranted, and either breaks the rule silently or follows it into absurdity. A principled version — "use semantic HTML — improves accessibility and SEO crawlability" — gives Claude the *reason*, so it can navigate the edge case: "this is a purely decorative wrapper with no semantic meaning, so a `<div>` is correct here." The principle bends. The bare rule snaps.
 
 So the compression wasn't just mechanical shrinking. It was a four-round conversation between human intent and machine understanding:
 
