@@ -1,4 +1,4 @@
-# Mode: plan-saas — SaaS Project Planning
+# Domain: plan-saas — SaaS Project Planning
 
 End-to-end SaaS planning: idea → viability → strategy → technical → marketing.
 Use `/plan-saas` skill. Four linear phases, each produces a deliverable document.

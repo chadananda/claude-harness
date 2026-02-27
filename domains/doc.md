@@ -1,4 +1,4 @@
-# Mode: doc — Documentation
+# Domain: doc — Documentation
 JSDoc inline comments + README.md per component/feature. Both in-repo.
 Placement: component docs IN component folder; high-level → docs/ (create if missing). NEVER project root — co-located docs stay maintained.
 JSDoc every exported function/class/constant: description, @param, @returns, @throws, @example. @typedef for complex objects.

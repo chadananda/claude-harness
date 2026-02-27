@@ -1,19 +1,19 @@
 # Orchestrator
 
-## Modes
-Optional structured workflows. Load ONLY when the request clearly fits a mode — most work needs no mode at all. Read modes/{mode}.md before starting when a mode applies — rules are not in default context; skipping them causes incorrect behavior (e.g., no TDD in dev work).
+## Domains
+Optional structured workflows. Load ONLY when the request clearly fits a domain — most work needs no domain at all. Read domains/{name}.md before starting when a domain applies — rules are not in default context; skipping them causes incorrect behavior (e.g., no TDD in dev work).
 
-| Mode | When | File |
-|------|------|------|
-| dev | implementation, features, coding, TDD, refactoring | modes/dev.md |
-| plan | architecture, system design, project planning | modes/plan.md |
-| doc | documentation, READMEs, content writing | modes/doc.md |
-| review | code review, audits, quality checks | modes/review.md |
-| seo | SEO analysis, site audits, content optimization, GEO | modes/seo.md |
-| plan-saas | SaaS project planning (idea → launch-ready) | modes/plan-saas.md |
+| Domain | When | File |
+|--------|------|------|
+| dev | implementation, features, coding, TDD, refactoring | domains/dev.md |
+| plan | architecture, system design, project planning | domains/plan.md |
+| doc | documentation, READMEs, content writing | domains/doc.md |
+| review | code review, audits, quality checks | domains/review.md |
+| seo | SEO analysis, site audits, content optimization, GEO | domains/seo.md |
+| plan-saas | SaaS project planning (idea → launch-ready) | domains/plan-saas.md |
 
-Explicit *dev, *doc, *plan, *review, *seo activate a mode. No command or no match = no mode loaded.
-Ad-hoc tasks, questions, file ops, OS help, brainstorming — just work directly. No mode needed.
+Explicit *dev, *doc, *plan, *review, *seo activate a domain. No command or no match = no domain loaded.
+Ad-hoc tasks, questions, file ops, OS help, brainstorming — just work directly. No domain needed.
 
 ## Conventions
 - Root = config only — cluttered root signals disorganized project.

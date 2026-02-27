@@ -1,4 +1,4 @@
-# Mode: plan — Planning & Architecture
+# Domain: plan — Planning & Architecture
 Use /plan skill for structured requirements gathering and task decomposition.
 Native Tasks with DAG dependencies — fan out independent work as parallel tasks.
 Restate requirements before designing — assumptions without verification waste cycles.

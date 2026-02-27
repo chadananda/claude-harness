@@ -1,4 +1,4 @@
-Comprehensive SEO analysis. Activates seo mode — read `modes/seo.md` first for methodology, scoring, and critical rules. Load reference files from `modes/seo/` as needed during analysis.
+Comprehensive SEO analysis. Activates seo domain — read `domains/seo.md` first for methodology, scoring, and critical rules. Load reference files from `domains/seo/` as needed during analysis.
 
 ## Commands
 
@@ -15,9 +15,9 @@ Comprehensive SEO analysis. Activates seo mode — read `modes/seo.md` first for
 
 ## Workflow
 
-1. Read `modes/seo.md` for methodology and critical rules
+1. Read `domains/seo.md` for methodology and critical rules
 2. Fetch target with WebFetch. Detect business type from homepage signals.
-3. Load relevant reference files (`modes/seo/{cwv,schema,eeat,quality-gates,geo}.md`) for the analysis categories needed
+3. Load relevant reference files (`domains/seo/{cwv,schema,eeat,quality-gates,geo}.md`) for the analysis categories needed
 4. Analyze across 7 weighted categories. Score 0-100.
 5. Prioritize: Critical → High → Medium → Low
 6. Output actionable report — specific fixes, not vague advice. Lead with quick wins.

@@ -1,4 +1,4 @@
-# Mode: dev — Feature Development
+# Domain: dev — Feature Development
 
 ## TDD
 Strict Red-Green-Refactor. Agents load @TDD.md. Never implement without failing test — proves requirement exists.

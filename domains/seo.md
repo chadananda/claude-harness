@@ -1,7 +1,7 @@
-# Mode: seo — SEO Analysis & Optimization
+# Domain: seo — SEO Analysis & Optimization
 
 ## Methodology
-Analyze sites across 7 weighted categories. Read reference files from `modes/seo/` on demand — they contain thresholds, schema status, and frameworks Claude doesn't know natively.
+Analyze sites across 7 weighted categories. Read reference files from `domains/seo/` on demand — they contain thresholds, schema status, and frameworks Claude doesn't know natively.
 
 | Category | Weight | Reference |
 |----------|--------|-----------|

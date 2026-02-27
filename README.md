@@ -1,11 +1,11 @@
-# Domain Mode Auto-Switching Meta Harness for Claude Code
+# Domain Auto-Switching Meta Harness for Claude Code
 
 ![Claude Harness](assets/header.png)
 
 > *"The smallest set of high-signal tokens that maximize the likelihood of some desired outcome."*
 > — Anthropic, [Effective Context Engineering for AI Agents](https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents)
 
-This is my actual `~/.claude` folder — the one I use every day for real work. It's a **harness**: a domain-aware orchestration system with six specialized modes that load rich, domain-specific workflows on demand while paying zero context cost when idle. TDD-enforced coding agents, SEO analysis with current-year knowledge, end-to-end SaaS planning — each domain mode brings deep expertise without polluting the others.
+This is my actual `~/.claude` folder — the one I use every day for real work. It's a **harness**: a domain-aware orchestration system with six specialized domains that load rich, domain-specific workflows on demand while paying zero context cost when idle. TDD-enforced coding agents, SEO analysis with current-year knowledge, end-to-end SaaS planning — each domain brings deep expertise without polluting the others.
 
 It's also the experimental playground for [xswarm](https://xswarm.ai) coding agents — autonomous agent swarms for software development.
 
@@ -59,19 +59,19 @@ The solution is not better writing. It is not more aggressive compression. It is
 
 The solution is **isolation.** Each domain loads its own deep expertise only when that expertise is relevant, and pays zero cost — zero tokens, zero attention, zero dilution — when it isn't. A coding session loads TDD rules and agent pipelines. An SEO audit loads schema deprecations and Core Web Vitals thresholds. A SaaS planning session loads scoring rubrics and marketing frameworks. And none of them ever meet at the same cocktail party.
 
-That's what domain mode switching does.
+That's what domain switching does.
 
 ---
 
 ## Table of Contents
 
-- [Domain Mode Switching](#domain-mode-switching) — The meta-harness architecture
-- [Mode: dev](#mode-dev--software-development) — TDD, agent pipeline, teams, stuck protocol
-- [Mode: plan](#mode-plan--project-planning) — Requirements gathering, task decomposition
-- [Mode: doc](#mode-doc--documentation) — Documentation rules, placement, structure
-- [Mode: review](#mode-review--code-review) — Code review criteria, YAGNI, minimization
-- [Mode: seo](#mode-seo--seo-analysis) — E-E-A-T, CWV, schema, GEO + reference files
-- [Mode: plan-saas](#mode-plan-saas--saas-project-planner) — 4-phase pipeline: validate → strategy → technical → marketing
+- [Domain Switching](#domain-switching) — The meta-harness architecture
+- [dev](#dev--software-development) — TDD, agent pipeline, teams, stuck protocol
+- [plan](#plan--project-planning) — Requirements gathering, task decomposition
+- [doc](#doc--documentation) — Documentation rules, placement, structure
+- [review](#review--code-review) — Code review criteria, YAGNI, minimization
+- [seo](#seo--seo-analysis) — E-E-A-T, CWV, schema, GEO + reference files
+- [plan-saas](#plan-saas--saas-project-planner) — 4-phase pipeline: validate → strategy → technical → marketing
 - [Skills](#skills--lazy-loaded-capabilities) — 21 on-demand capabilities
 - [The Compression Story](#the-compression-story) — 4,100 → 296 lines in 4 rounds
 - [Getting Started](#getting-started)
@@ -80,9 +80,9 @@ That's what domain mode switching does.
 
 ---
 
-## Domain Mode Switching
+## Domain Switching
 
-This harness solves the multiplier problem by keeping CLAUDE.md to **~15 lines** — a routing table, not an instruction manual. Claude classifies the activity, loads one mode file, and gets deep domain expertise for exactly that task. Everything else stays out of context.
+This harness solves the multiplier problem by keeping CLAUDE.md to **~15 lines** — a routing table, not an instruction manual. Claude classifies the activity, loads one domain file, and gets deep expertise for exactly that task. Everything else stays out of context.
 
 ```
                               CLAUDE.md (~15 lines)
@@ -90,14 +90,14 @@ This harness solves the multiplier problem by keeping CLAUDE.md to **~15 lines**
                                     │
                     ┌───────────────┼───────────────┐
                     │               │               │
-              classify activity   no match?     explicit *mode?
-                    │           just Claude        override
+              classify activity   no match?     explicit *domain?
+                    │           just Claude         override
                     ▼               │               │
               ┌─────────────────────┴───────────────┘
               │
               ▼
      ┌────────────────────────────────────────────────────┐
-     │  modes/                                             │
+     │  domains/                                            │
      │  ├── dev.md          ~25 lines + 251 lines agents  │
      │  ├── plan.md         ~10 lines                     │
      │  ├── doc.md          ~10 lines                     │
@@ -107,27 +107,27 @@ This harness solves the multiplier problem by keeping CLAUDE.md to **~15 lines**
      └────────────────────────────────────────────────────┘
 ```
 
-**How it works:** Claude reads the user's prompt, classifies the activity, and reads one mode file (a single Read call). No hooks, no regex, no external scripts. Claude is the best classifier — it understands intent, not just keywords. Explicit `*dev`, `*seo`, etc. override classification.
+**How it works:** Claude reads the user's prompt, classifies the activity, and reads one domain file (a single Read call). No hooks, no regex, no external scripts. Claude is the best classifier — it understands intent, not just keywords. Explicit `*dev`, `*seo`, etc. override classification.
 
 **The numbers:**
 
 | Scenario | Context Loaded | Lines |
 |----------|---------------|-------|
 | Ad-hoc / questions / file ops | CLAUDE.md only | ~15 |
-| Feature development | CLAUDE.md + modes/dev.md | ~40 |
-| Documentation | CLAUDE.md + modes/doc.md | ~25 |
-| Project planning | CLAUDE.md + modes/plan.md | ~25 |
-| Code review | CLAUDE.md + modes/review.md | ~25 |
-| SEO analysis | CLAUDE.md + modes/seo.md + refs | ~45 + ~40-60/ref |
-| SaaS planning | CLAUDE.md + mode + skill + refs | ~75 + ~60-140/phase |
+| Feature development | CLAUDE.md + domains/dev.md | ~40 |
+| Documentation | CLAUDE.md + domains/doc.md | ~25 |
+| Project planning | CLAUDE.md + domains/plan.md | ~25 |
+| Code review | CLAUDE.md + domains/review.md | ~25 |
+| SEO analysis | CLAUDE.md + domains/seo.md + refs | ~45 + ~40-60/ref |
+| SaaS planning | CLAUDE.md + domain + skill + refs | ~75 + ~60-140/phase |
 
-Most work pays **zero mode overhead**. A typical harness with equivalent domain coverage would load 300-500 lines into every conversation. This one loads 15. That's a 20-30x reduction on the multiplier — and because agents amplify the cost, the real savings in a multi-agent pipeline are even larger.
+Most work pays **zero domain overhead**. A typical harness with equivalent domain coverage would load 300-500 lines into every conversation. This one loads 15. That's a 20-30x reduction on the multiplier — and because agents amplify the cost, the real savings in a multi-agent pipeline are even larger.
 
-Each mode can be arbitrarily deep — the SaaS planner has 1,770 lines of domain knowledge across 18 files — without adding a single token to an SEO audit or a code review. Adding a new domain is just a markdown file plus a row in the routing table. No code changes.
+Each domain can be arbitrarily deep — the SaaS planner has 1,770 lines of domain knowledge across 18 files — without adding a single token to an SEO audit or a code review. Adding a new domain is just a markdown file plus a row in the routing table. No code changes.
 
 ### Principles-First Instructions
 
-Every instruction across all modes follows one rule: **carry your own rationale.**
+Every instruction across all domains follows one rule: **carry your own rationale.**
 
 ```
 Bare:        Run tests after EVERY change.
@@ -145,11 +145,11 @@ Two related disciplines underpin this:
 
 ---
 
-## Mode: dev — Software Development
+## dev — Software Development
 
 **~25 lines loaded** on activation, plus 251 lines of agent definitions on spawn.
 
-The dev mode solves a specific problem: Claude Code is brilliant but treats you as its free human QA department. Without specific instructions, it writes code confidently, hands it to you, expects *you* to test it and iterate. We invert that. *Claude* writes the tests. *Claude* verifies its own work. *Claude* catches its own bugs. You make decisions. You approve plans. You don't manually test anything.
+The dev domain solves a specific problem: Claude Code is brilliant but treats you as its free human QA department. Without specific instructions, it writes code confidently, hands it to you, expects *you* to test it and iterate. We invert that. *Claude* writes the tests. *Claude* verifies its own work. *Claude* catches its own bugs. You make decisions. You approve plans. You don't manually test anything.
 
 ### The TDD Protocol
 
@@ -206,7 +206,7 @@ The `stuck` agent is the *only* agent allowed to ask you questions. It presents 
 
 ---
 
-## Mode: plan — Project Planning
+## plan — Project Planning
 
 **~10 lines loaded** on activation.
 
@@ -221,7 +221,7 @@ Interactive requirements gathering and task decomposition. Transforms vague requ
 
 ---
 
-## Mode: doc — Documentation
+## doc — Documentation
 
 **~10 lines loaded** on activation.
 
@@ -229,21 +229,21 @@ Documentation rules, placement conventions, and structure. Keeps docs co-located
 
 ---
 
-## Mode: review — Code Review
+## review — Code Review
 
 **~10 lines loaded** on activation.
 
-Multi-agent code review pipeline. Review criteria include correctness, security (OWASP top 10), YAGNI violations, dead code, and opportunities to minimize. The reviewer agent applies the same minimize-first philosophy from dev mode: if code doesn't shrink, stop changing it.
+Multi-agent code review pipeline. Review criteria include correctness, security (OWASP top 10), YAGNI violations, dead code, and opportunities to minimize. The reviewer agent applies the same minimize-first philosophy from the dev domain: if code doesn't shrink, stop changing it.
 
 ---
 
-## Mode: seo — SEO Analysis
+## seo — SEO Analysis
 
 **~45 lines loaded** on activation, plus ~231 lines across 5 reference files loaded on demand.
 
-This mode demonstrates the **reference file pattern** — domain knowledge Claude doesn't have natively, loaded just-in-time per analysis category. SEO changes constantly: schema types get deprecated, Core Web Vitals thresholds shift, AI search optimization is brand new. The mode file contains methodology and critical rules. Reference files contain perishable knowledge.
+This domain demonstrates the **reference file pattern** — domain knowledge Claude doesn't have natively, loaded just-in-time per analysis category. SEO changes constantly: schema types get deprecated, Core Web Vitals thresholds shift, AI search optimization is brand new. The domain file contains methodology and critical rules. Reference files contain perishable knowledge.
 
-### What's in the mode file (~45 lines)
+### What's in the domain file (~45 lines)
 - 7-category weighted scoring methodology (Technical 25%, Content/E-E-A-T 25%, On-Page 20%, Schema 10%, CWV 10%, Images 5%, GEO 5%)
 - Critical rules Claude gets wrong: INP replaced FID, HowTo schema deprecated, FAQ schema restricted, mobile-first 100% complete, E-E-A-T applies to all competitive queries
 - GEO quick wins for AI search optimization
@@ -262,9 +262,9 @@ Inspired by [claude-seo](https://github.com/AgriciDaniel/claude-seo), distilled 
 
 ---
 
-## Mode: plan-saas — SaaS Project Planner
+## plan-saas — SaaS Project Planner
 
-**~8 lines in mode file**, pointing to a comprehensive skill with **~1,770 lines across 18 files** — all loaded on demand per phase. Zero cost when not in use.
+**~8 lines in domain file**, pointing to a comprehensive skill with **~1,770 lines across 18 files** — all loaded on demand per phase. Zero cost when not in use.
 
 Takes a SaaS idea from napkin sketch to implementation-ready repo with a 12-month marketing calendar. Four linear phases, each producing a deliverable document that feeds into the next:
 
@@ -339,7 +339,7 @@ skills/plan-saas/                        # 18 files, ~1,770 lines total
     └── marketing-prd.md
 ```
 
-Each phase loads only its relevant references (~60-140 lines), not the full ~790 lines. Same just-in-time pattern as the SEO mode, scaled up.
+Each phase loads only its relevant references (~60-140 lines), not the full ~790 lines. Same just-in-time pattern as the SEO domain, scaled up.
 
 **Commands:** `/plan-saas [idea]` (full pipeline), `/plan-saas validate|strategy|technical|marketing` (individual phases), `/plan-saas resume` (detect and continue).
 
@@ -392,7 +392,7 @@ Principles-first doesn't mean verbose. The harness grew organically to 4,100 lin
 | **1: Architectural** | Merged critics, replaced 1,213-line planner with 180-line skill | 181 | 1,066 |
 | **2: Structural** | Removed model-known content, dropped templates | 68 | 464 |
 | **3: Terse + Principled** | `Rule — reason.` format, cut filler, added rationale | 45 | 251 |
-| **4: Dynamic Modes** | On-demand loading, ~15 line orchestrator | ~15 | 251 |
+| **4: Dynamic Domains** | On-demand loading, ~15 line orchestrator | ~15 | 251 |
 
 **The takeaway:** Agent instructions load on every invocation. A 500-line agent burns 2,000+ tokens before doing any work. But the answer isn't stripping reasons to save tokens — it's stripping everything *except* rules and reasons, and loading context *only when it's needed*. Principles are load-bearing structure. Templates and re-explanations are scaffolding you remove once the building stands.
 
@@ -416,8 +416,8 @@ Cherry-pick what you want. The system is modular:
 - Just want TDD? Grab `agents/TDD.md` and reference it from your agents.
 - Just want the pipeline? Take the `agents/` folder.
 - Just want skills? Copy individual skill folders into `~/.claude/skills/`.
-- Just want modes? Copy `modes/` and the mode table from CLAUDE.md.
-- Just want SaaS planning? Copy `skills/plan-saas/` + `modes/plan-saas.md`.
+- Just want domains? Copy `domains/` and the domain table from CLAUDE.md.
+- Just want SaaS planning? Copy `skills/plan-saas/` + `domains/plan-saas.md`.
 
 ### Requirements
 
@@ -430,8 +430,8 @@ Cherry-pick what you want. The system is modular:
 ## Design Decisions
 
 <details>
-<summary><b>Why domain modes instead of one big CLAUDE.md?</b></summary>
-A monolithic CLAUDE.md with all domain knowledge loads everything into every conversation. SEO schema deprecation rules compete for attention during feature development. TDD agent pipelines create noise during content planning. Domain modes solve both the token cost problem (don't load what you don't need) and the attention quality problem (don't distract the model with irrelevant constraints). Each mode can be thousands of lines deep without affecting any other mode.
+<summary><b>Why domains instead of one big CLAUDE.md?</b></summary>
+A monolithic CLAUDE.md with all domain knowledge loads everything into every conversation. SEO schema deprecation rules compete for attention during feature development. TDD agent pipelines create noise during content planning. Domains solve both the token cost problem (don't load what you don't need) and the attention quality problem (don't distract the model with irrelevant constraints). Each domain can be thousands of lines deep without affecting any other domain.
 </details>
 
 <details>
@@ -441,7 +441,7 @@ Keyword regex (like Carl's approach) misfires on ambiguous words and requires ma
 
 <details>
 <summary><b>Why reference sub-files for SEO and SaaS planning?</b></summary>
-Both domains require knowledge Claude doesn't have natively — deprecated schema types, current CWV thresholds, SaaS pricing benchmarks, guerrilla marketing tactics with specific numbers. The mode file loads methodology and rules. Reference files load perishable domain knowledge on demand per sub-task. SEO: ~231 lines across 5 files. SaaS planning: ~790 lines across 9 files. Neither pollutes the other or loads when unused.
+Both domains require knowledge Claude doesn't have natively — deprecated schema types, current CWV thresholds, SaaS pricing benchmarks, guerrilla marketing tactics with specific numbers. The domain file loads methodology and rules. Reference files load perishable domain knowledge on demand per sub-task. SEO: ~231 lines across 5 files. SaaS planning: ~790 lines across 9 files. Neither pollutes the other or loads when unused.
 </details>
 
 <details>
@@ -468,7 +468,7 @@ Tasks already provide DAG dependencies, status tracking, and blocking semantics.
 
 ## Making It Your Own
 
-**Want to add a domain mode?** Create a `.md` file in `modes/` and add a row to the mode table in CLAUDE.md. That's it. No code changes. Your new mode can be 10 lines or 1,000 — it only loads when the activity matches.
+**Want to add a domain?** Create a `.md` file in `domains/` and add a row to the domain table in CLAUDE.md. That's it. No code changes. Your new domain can be 10 lines or 1,000 — it only loads when the activity matches.
 
 **Don't like strict TDD?** Edit `agents/TDD.md`. Or delete it entirely.
 
@@ -484,7 +484,7 @@ Tasks already provide DAG dependencies, status tracking, and blocking semantics.
 
 This repo is the petri dish for [xswarm](https://xswarm.ai) — an autonomous agent swarm framework for 2026. Everything here started as an experiment:
 
-- **Domain mode switching** — isolated context loading makes each domain arbitrarily deep without cross-contamination.
+- **Domain switching** — isolated context loading makes each domain arbitrarily deep without cross-contamination.
 - **Team-lead pipeline** — managers work better when they can't write code; they focus on routing and quality.
 - **Stuck protocol** — agents that can't guess eliminated more wasted time than any other change.
 - **TDD enforcement** — making test-first structural, not aspirational, changed everything.
