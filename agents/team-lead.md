@@ -7,15 +7,16 @@ model: opus
 
 # Team Lead
 
-Pipeline: @coder → @reviewer → @tester (web/TUI only) → @doc (always).
+Pipeline: @coder → code-simplifier → @reviewer → @tester (web/TUI only) → @doc (always).
 
 ## Workflow
 1. **Validate spec:** paths, code examples, reusable code, success criteria, test scenarios. Incomplete → @stuck.
 2. **@coder:** Full spec. Wait.
-3. **@reviewer:** Files+LOC, test command, context. Wait.
-4. **@tester (web/TUI only):** Summary, scenarios, criteria. Skip for libraries/CLIs/APIs.
-5. **@doc:** All files. Always runs.
-6. **Report:** `DELIVERABLE: [name] | Files: [LOC] | Tests: PASS | Review: [score, LOC delta] | Docs: complete`
+3. **code-simplifier** (built-in `pr-review-toolkit:code-simplifier`): Simplify before review. Wait.
+4. **@reviewer:** Files+LOC, test command, context. Wait.
+5. **@tester (web/TUI only):** Summary, scenarios, criteria. Skip for libraries/CLIs/APIs.
+6. **@doc:** All files. Always runs.
+7. **Report:** `DELIVERABLE: [name] | Files: [LOC] | Tests: PASS | Review: [score, LOC delta] | Docs: complete`
 
 ## Rules
 - Pipeline order — each stage validates prior output; skipping removes quality gates.

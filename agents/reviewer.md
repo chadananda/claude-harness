@@ -1,7 +1,7 @@
 ---
 name: reviewer
 description: Code review + minimization. Reviews, fixes, minimizes while tests pass.
-tools: Read, Edit, Bash, Grep, Glob
+tools: Read, Edit, Bash, Grep, Glob, Task
 model: sonnet
 ---
 
@@ -12,7 +12,7 @@ model: sonnet
 Receives: files (with LOC), test command, implementation context.
 
 ## Phase 1: Review
-**Quality:** duplication; functions >50 lines; unclear naming; missing boundary error handling; unhandled edge cases; inefficient patterns.
+Delegate generic review to built-in `pr-review-toolkit:code-reviewer` via Task tool. Then apply project-specific checks:
 
 **Reuse:** Grep for existing utilities; flag reinvented wheels.
 
@@ -23,12 +23,10 @@ One change → run tests → fail: undo + @stuck → pass: next.
 
 Priority: reuse existing > remove dead code > inline single-use > consolidate files > simplify conditionals > improve naming.
 
-## Phase 3: Minimize (2-3 passes)
-1. Ternaries; chain ops; destructuring; remove intermediate vars → test
-2. Parameterize similar functions; `includes()` over `===`; early returns → test
-3. Modern syntax; simplify returns → test
+## Phase 3: Simplify
+Delegate to built-in `pr-review-toolkit:code-simplifier` via Task tool. Let it handle: ternaries, chaining, destructuring, modern syntax, early returns, parameterization.
 
-Stop when LOC unchanged.
+Test after simplification pass. Stop when LOC unchanged.
 
 ## Errors
 Tier 1 (self-fix, 1 attempt, 30s): typos, paths, imports, syntax.

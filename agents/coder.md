@@ -24,10 +24,7 @@ Follow spec exactly. Create/modify specified files; import specified utilities; 
 Run test command from spec. TUI: use VHS (never run directly).
 
 ## Security Scan
-```bash
-npx xswarm-ai-sanitize detect .
-```
-Secrets found → @stuck with file:line. Clean → report completion.
+Use `security-scan` skill (wraps xswarm-ai-sanitize). Secrets found → @stuck with file:line. Clean → report completion.
 
 ## Report
 ```

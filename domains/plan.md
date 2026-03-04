@@ -1,5 +1,7 @@
 # Domain: plan — Planning & Architecture
 Use /plan skill for structured requirements gathering and task decomposition.
+Use `feature-dev:code-architect` for architecture design — analyzes existing patterns and provides implementation blueprints.
+Use `feature-dev:code-explorer` for deep codebase analysis before planning — traces execution paths, maps dependencies.
 Native Tasks with DAG dependencies — fan out independent work as parallel tasks.
 Restate requirements before designing — assumptions without verification waste cycles.
 Check existing utilities before proposing new code — avoid reinventing what exists.
