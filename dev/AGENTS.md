@@ -8,8 +8,7 @@
 | `dev/progress.md` | Running log — current phase, last task, blockers |
 | `dev/AGENTS.md` | This file — TOC and session protocol |
 | `domains/dev.md` | Domain rules (source of truth for steps) |
-| `scripts/verify-harness.js` | Pre-commit enforcement script |
-| `.git/hooks/pre-commit` | Hook that runs verify-harness.js |
+| `hooks/verify-dev-harness.py` | Claude Code PreToolUse hook — blocks invalid commits |
 
 ## Session Protocol
 
@@ -19,7 +18,7 @@
 4. **Run** the task's `verify_cmd` — confirm it passes.
 5. **Update** `dev/tasks.json` — flip `"status": "fail"` to `"status": "pass"`.
 6. **Append** to `dev/progress.md` — add a row with timestamp, task ID, action taken, and result.
-7. **Commit** — the pre-commit hook enforces that every pass flip has a matching verify_cmd execution and progress.md update in staged files.
+7. **Commit** — the Claude Code `PreToolUse` hook (`verify-dev-harness.py`) blocks commits where pass flips lack verify_cmd execution or progress.md entries.
 8. **Repeat** from step 2 until all tasks pass.
 
 ## Phase Order

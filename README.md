@@ -206,7 +206,7 @@ The `stuck` agent is the *only* agent allowed to ask you questions. It presents 
 
 ### Harness Enforcement — Hooks and Artifacts
 
-The dev domain doesn't just *describe* a workflow — it **enforces** it through artifacts and git hooks. Every dev-domain step is captured in a task file, and a pre-commit hook prevents shortcuts.
+The dev domain doesn't just *describe* a workflow — it **enforces** it through artifacts and Claude Code hooks. Every dev-domain step is captured in a task file, and a `PreToolUse` hook prevents shortcuts.
 
 **Artifacts:**
 
@@ -231,7 +231,7 @@ The dev domain doesn't just *describe* a workflow — it **enforces** it through
 
 2. **During work:** Agents follow the session protocol in `dev/AGENTS.md` — pick first failing task, implement it, run its `verify_cmd`, flip status to `pass`, log the result in `progress.md`.
 
-3. **On commit:** A git pre-commit hook (`.git/hooks/pre-commit`) runs `scripts/verify-harness.js`, which **rejects commits** where:
+3. **On commit:** A Claude Code `PreToolUse` hook on `Bash` (`hooks/verify-dev-harness.py`) intercepts `git commit` commands and **blocks them** when:
    - A task was flipped from `fail` to `pass` without a non-empty `verify_cmd`
    - `dev/progress.md` wasn't updated alongside `dev/tasks.json`
    - The flipped task's ID doesn't appear in the staged `progress.md`
