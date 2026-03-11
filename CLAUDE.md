@@ -13,6 +13,7 @@ Optional structured workflows. Load ONLY when the request clearly fits a domain 
 | seo | SEO analysis, site audits, content optimization, GEO | domains/seo.md |
 | plan-saas | SaaS project planning (idea → launch-ready) | domains/plan-saas.md |
 | plan-api | API product planning (idea → developer GTM) | domains/plan-api.md |
+| qa | autonomous QA, visual verification, regression testing | domains/qa.md |
 
 Explicit *dev, *doc, *content, *plan, *review, *seo activate a domain. No command or no match = no domain loaded.
 Ad-hoc tasks, questions, file ops, OS help, brainstorming — just work directly. No domain needed.

@@ -99,6 +99,7 @@ This harness solves the multiplier problem by keeping CLAUDE.md to **~15 lines**
      │  domains/                                            │
      │  ├── writing-voice.md ~15 lines (shared dependency)  │
      │  ├── dev.md          ~25 lines + 251 lines agents  │
+     │  ├── qa.md           ~35 lines                     │
      │  ├── plan.md         ~10 lines                     │
      │  ├── doc.md          ~10 lines                     │
      │  ├── content.md      ~45 lines                     │
@@ -243,9 +244,37 @@ The harness enforces the *what* (dev domain workflow steps). How many Claude Cod
 
 ---
 
+## qa — Autonomous QA Watchdog
+
+**Activated via `/loop 1h /qa-loop`.** One loop, one decision tree, no human required.
+
+The problem: Claude finishes a task, declares victory, and sits idle. Meanwhile, obvious visual bugs exist, responsive layouts haven't been tested at actual mobile widths, and "all tests pass" means nothing because the tests don't verify what the user sees. This is especially painful for tasks like "clone this website" — Claude will claim pixel-perfect fidelity without ever opening a browser.
+
+The QA loop fixes this by running every hour (or whatever interval you set) and making a single decision:
+
+```
+  Is there unfinished dev work? → Do dev (loads dev domain, follows TDD)
+  Has anything changed since last QA? → Do QA (loads qa domain, screenshots first)
+  Nothing to do? → Log idle, wait for next tick.
+```
+
+**One action per tick.** The loop doesn't try to do everything at once — it picks the single highest-impact action (visual regression > functional > responsive > performance > accessibility > dead code > links > security) and does it thoroughly. The loop runs again in an hour.
+
+**Visual-first, skeptical by default.** The qa domain enforces actual Playwright screenshots at multiple viewports. "Looks fine" is not a finding. "Screenshot at `tmp/qa-pass-3-home-375px.png` shows correct layout" is a finding. Every tick that touches a UI project must produce at least one screenshot.
+
+**Usage:** Start it in a tmux session before bed. Wake up to `tmp/qa-report.md` with timestamped findings, screenshot paths, and a log of every action taken or skipped.
+
+```bash
+# In tmux:
+/loop 1h /qa-loop
+/loop 1h /qa-loop focus on responsive layout   # weighted focus
+```
+
+---
+
 ## Other Domains
 
-The domain system is extensible — add a `.md` file to `domains/` and a row to the routing table. These seven domains ship alongside dev:
+The domain system is extensible — add a `.md` file to `domains/` and a row to the routing table. These eight domains ship alongside dev:
 
 | Domain | When | Context Cost | Details |
 |--------|------|-------------|---------|
@@ -256,6 +285,7 @@ The domain system is extensible — add a `.md` file to `domains/` and a row to 
 | [seo](docs/README_DOMAIN_seo.md) | SEO analysis, site audits, GEO | ~45 + refs | 7-category scoring, reference file pattern |
 | [plan-saas](docs/README_DOMAIN_plan-saas.md) | SaaS project planning | ~8 + 1,770 refs | 4-phase: validate → strategy → technical → marketing |
 | [plan-api](docs/README_DOMAIN_plan-api.md) | API product planning | ~7 + 2,000 refs | 4-phase pipeline, 52-week marketing calendar |
+| qa | Autonomous QA, visual verification | ~35 lines | Visual-first, skeptical, Playwright screenshots |
 
 Each domain can be arbitrarily deep without affecting any other domain. The SaaS planner has 1,770 lines of domain knowledge across 18 files — zero tokens loaded during a code review.
 
@@ -263,7 +293,7 @@ Each domain can be arbitrarily deep without affecting any other domain. The SaaS
 
 ## Skills — Lazy-Loaded Capabilities
 
-Skills only wake up when relevant. Claude scans each skill's description (~100 tokens) and ignores the rest until triggered. 24 skills cost almost nothing at idle.
+Skills only wake up when relevant. Claude scans each skill's description (~100 tokens) and ignores the rest until triggered. 25 skills cost almost nothing at idle.
 
 ```
 skills/
@@ -275,6 +305,7 @@ skills/
 │   ├── systematic-debugging/    # 4-phase root cause analysis
 │   ├── using-git-worktrees/     # Parallel branch isolation
 │   ├── property-based-testing/  # Hypothesis/QuickCheck
+│   ├── qa-loop/                 # Autonomous QA watchdog (/loop 1h /qa-loop)
 │   ├── notify-assistant/        # Ping OpenClaw on completion
 │   └── security-scan/           # xswarm-ai-sanitize secret detection
 │
