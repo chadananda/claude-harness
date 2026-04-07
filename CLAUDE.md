@@ -43,9 +43,9 @@ Each session starts fresh from the plan file. The plan is the continuity, not th
 ## Documentation for AI (Minimize Onboarding Tokens)
 - **README.md at project root:** For humans. Project overview, how to use it.
 - **All other READMEs (in folders):** For Claude Code. Terse, one sentence explaining the folder's purpose. If a folder doesn't need explanation, it doesn't need to exist.
-- **File headers:** First 1-3 lines of every code file: what it does, in/out, key deps. Written for Claude Code, not humans.
+- **File headers:** 1-3 line comment at top of every code file. For AI, not humans. No JSDoc, no @param, no verbose docs. Zero duplication — never restate what the code already says. Only state: purpose, key deps, non-obvious behavior. Example: `// Auth middleware. JWT cookie → user on locals. Deps: jwt, db`
 - **CLAUDE.md per project:** Router-style — point to domains/skills, don't inline instructions.
-- Goal: fresh session understands the project in <500 tokens of reading.
+- Goal: fresh session understands the project in <500 tokens of reading. Maximum information, minimum tokens.
 
 ## Worker Status Reporting
 On completing a task (especially autonomous/dispatched work), write `worker-status.json` to the project root:
