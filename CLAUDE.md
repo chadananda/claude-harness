@@ -31,6 +31,14 @@ When producing human-facing text, load domains/writing-voice.md. Domains that ge
 - `grep`/`Grep` before reading — find the relevant section first.
 - Don't re-read files already in context.
 - Prefer `Glob` and `Grep` over `Bash(find)` and `Bash(grep)`.
+- Run `/compact` after completing major task chunks to free context.
+
+## Work in Lurches (Session Management)
+For autonomous work, break into short sessions to avoid context bloat:
+1. **Plan session:** analyze codebase → write plan to `tmp/work-plan.md` → exit
+2. **Work session:** read plan → implement 2-3 items → commit → update plan → exit
+3. **Repeat** until plan is complete
+Each session starts fresh from the plan file. The plan is the continuity, not the conversation.
 
 ## Worker Status Reporting
 On completing a task (especially autonomous/dispatched work), write `worker-status.json` to the project root:
