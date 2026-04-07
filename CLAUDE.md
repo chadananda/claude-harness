@@ -40,6 +40,13 @@ For autonomous work, break into short sessions to avoid context bloat:
 3. **Repeat** until plan is complete
 Each session starts fresh from the plan file. The plan is the continuity, not the conversation.
 
+## Documentation for AI (Minimize Onboarding Tokens)
+- **README.md at project root:** For humans. Project overview, how to use it.
+- **All other READMEs (in folders):** For Claude Code. Terse, one sentence explaining the folder's purpose. If a folder doesn't need explanation, it doesn't need to exist.
+- **File headers:** First 1-3 lines of every code file: what it does, in/out, key deps. Written for Claude Code, not humans.
+- **CLAUDE.md per project:** Router-style — point to domains/skills, don't inline instructions.
+- Goal: fresh session understands the project in <500 tokens of reading.
+
 ## Worker Status Reporting
 On completing a task (especially autonomous/dispatched work), write `worker-status.json` to the project root:
 ```json
