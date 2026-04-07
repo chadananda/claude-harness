@@ -1,0 +1,47 @@
+[
+  {
+    "from": "fix-global-styles-and-fonts",
+    "text": "IMPLEMENTATION COMPLETE\nTask: fix-global-styles-and-fonts | Files: global.css, BaseLayout.astro, Container.astro, Button.astro, Card.astro, Header.astro, Footer.astro, navigation.js, PageLayout.astro | Summary: Replaced DM Sans/Urbanist with Roboto/RobotoSlab; added dark-footer/faq-active colors, font-slab, body font-weight; updated all max-w-7xl to max-w-[1320px]; button rounded-[14px] with WP padding; card rounded-[14px]; footer bg-[#191A1C], contact tod@reddzone.net/503 791 9854; removed Blog nav item; hero py-[100px]",
+    "summary": "All 9 file changes complete",
+    "timestamp": "2026-03-10T13:30:58.742Z",
+    "color": "blue",
+    "read": true
+  },
+  {
+    "from": "fix-global-styles-and-fonts",
+    "text": "{\"type\":\"idle_notification\",\"from\":\"fix-global-styles-and-fonts\",\"timestamp\":\"2026-03-10T13:31:04.322Z\",\"idleReason\":\"available\"}",
+    "timestamp": "2026-03-10T13:31:04.322Z",
+    "color": "blue",
+    "read": true
+  },
+  {
+    "from": "fix-homepage-components",
+    "text": "IMPLEMENTATION COMPLETE\nTask: fix-homepage-components | Files: 7 files modified | Summary:\n- HeroSlider.svelte: Updated slide titles/CTAs to match WP (\"Welcome To The Redd Zone\", \"Read More\" CTAs), fixed height to h-[480px] md:h-[700px] lg:h-[860px], added font-semibold, rounded-[14px] button, font-slab style\n- MissionSection.astro: Replaced with About Us section (py-[100px] bg-cream), WP copy about Tod Jones/Jeremy Richardson, rounded-[14px] images\n- PartnerLogos.astro: Fixed opacity 0.6→0.2, slice(0,6), py-[100px] bg-white, removed SectionHeading and grayscale\n- ProductShowcase.astro: Updated to \"Our Store\"/\"Featured Items\", square image aspect ratio, centered card layout with \"Contact Redd Zone Team Member\" CTA\n- CTABanner.astro: py-[100px], CTA changed to \"Send Brief\"\n- index.astro: Removed BlogPreview, added Mission Statement section, What We Do/Services section, Why Choose section, reordered to match WP structure\n- services.js: Updated titles to Natural Components, Large Selection, Unique Patterns, Creative People",
+    "summary": "Homepage components all updated to match WP",
+    "timestamp": "2026-03-10T13:32:16.842Z",
+    "color": "green",
+    "read": true
+  },
+  {
+    "from": "fix-homepage-components",
+    "text": "{\"type\":\"idle_notification\",\"from\":\"fix-homepage-components\",\"timestamp\":\"2026-03-10T13:32:21.617Z\",\"idleReason\":\"available\"}",
+    "timestamp": "2026-03-10T13:32:21.617Z",
+    "color": "green",
+    "read": true
+  },
+  {
+    "from": "fix-inner-pages",
+    "text": "IMPLEMENTATION COMPLETE\n\nTask: fix-inner-pages | Files: 16 modified, 2 created, 2 deleted\n\nSummary:\n1. ContactInfo.astro — updated email to tod@reddzone.net, phone to 503 791 9854, heading to \"Contact Details\", description to match WP\n2. contact-us.astro — updated Send Brief mailto to tod@reddzone.net, both sections to py-[100px]\n3. FAQAccordion.svelte — black bg tabs, white text, red (#DF1129) active state, rounded-[14px], py-5\n4. faq.js — replaced all content with WP exact pricing (5 items, consolidated incubator+eyeing into one Q)\n5. vertical-incubator.md — title changed to 'Redd Zone \"Best Fry\" Incubators'\n6. eyeing-station.md — title changed to \"Portable Egg Eyeing Stations\"\n7. instant-hatchery.md — title changed to \"Instant Hatcheries\"\n8. Created hybrid-incubation.md (order: 4) and streamside-incubation.md (order: 5)\n9. Deleted tray-system.md and water-management.md\n10. ProductCard.astro — button text changed to \"Contact Redd Zone Team Member\"\n11. PartnerGrid.astro — opacity-20 (from 0.6), py-[100px], removed grayscale classes\n12. All section pages — py-16 md:py-24 → py-[100px] across about-us, products, faq, contact-us, outreach-programs, merchandise, our-partners (BlogPreview); about-us team heading → \"Meet the People Who Take Risks\", services heading → \"Take Your Craft to the Next Level\"",
+    "summary": "All 12 inner page fixes complete",
+    "timestamp": "2026-03-10T13:34:21.751Z",
+    "color": "yellow",
+    "read": true
+  },
+  {
+    "from": "fix-inner-pages",
+    "text": "{\"type\":\"idle_notification\",\"from\":\"fix-inner-pages\",\"timestamp\":\"2026-03-10T13:34:27.749Z\",\"idleReason\":\"available\"}",
+    "timestamp": "2026-03-10T13:34:27.749Z",
+    "color": "yellow",
+    "read": true
+  }
+]

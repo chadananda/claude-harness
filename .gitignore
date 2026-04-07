@@ -44,3 +44,18 @@ history.jsonl
 stats-cache.json
 settings.local.json
 .current-mode
+
+# OAuth credentials (machine-specific secrets)
+google-oauth-credentials.json
+google-oauth-token.json
+mcp-needs-auth-cache.json
+
+# Session data (machine-specific)
+sessions/
+.claude/
+chrome/
+xswarm-subconscious.db
+
+# Assistant-specific commands (installed from Assistant repo)
+commands/dispatch/
+commands/monitor_projects/

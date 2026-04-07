@@ -19,12 +19,21 @@ Store memories when you encounter:
 
 Do NOT store: verbose output, raw code blocks, secrets/credentials, trivial facts.
 
+## Database Location
+
+**CRITICAL:** The database MUST be stored at the **project root** `.claude/xswarm-subconscious.db` — never in subdirectories. The project root is the top-level directory that contains the `.claude/` folder. Before storing, resolve the project root by walking up from the current directory to find the existing `.claude/` folder. Never create a new `.claude/` folder in a subdirectory.
+
+When running from a subagent or background task, always use an absolute path to the project root's `.claude/` directory, not the current working directory.
+
 ## How to Store
 
 Run this command via Bash:
 
 ```bash
+# Always use the project root — find it by locating the existing .claude/ folder
+PROJECT_ROOT=$(cd "$(pwd)" && while [ ! -d ".claude" ] && [ "$(pwd)" != "/" ]; do cd ..; done && pwd)
 xswarm-subconscious store \
+  --db "$PROJECT_ROOT/.claude/xswarm-subconscious.db" \
   --text "Original conversational context with full detail for later reference" \
   --summary "Concise standardized notation optimized for search matching" \
   --tags "comma,separated,labels" \

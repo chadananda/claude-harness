@@ -1,0 +1,19 @@
+{
+  "name": "phase2",
+  "description": "Phase 2: Testing, Dashboard Redesign, Reports, Mobile, Content",
+  "createdAt": 1773023878684,
+  "leadAgentId": "team-lead@phase2",
+  "leadSessionId": "2bdbcf70-2d58-46f1-a749-b0dc58cb01da",
+  "members": [
+    {
+      "agentId": "team-lead@phase2",
+      "name": "team-lead",
+      "agentType": "team-lead",
+      "model": "claude-opus-4-6",
+      "joinedAt": 1773023878684,
+      "tmuxPaneId": "",
+      "cwd": "/Users/chad/Dropbox/Public/JS/Projects/xswarm-freeloader",
+      "subscriptions": []
+    }
+  ]
+}

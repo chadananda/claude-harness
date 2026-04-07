@@ -1,0 +1,218 @@
+[
+  {
+    "from": "team-lead",
+    "text": "{\"type\":\"task_assignment\",\"taskId\":\"5\",\"subject\":\"Create BDD tests for dashboard and routing\",\"description\":\"Create API-level BDD tests using Vitest + Fastify .inject():\\n\\ntests/bdd/account-setup.test.js:\\n- First-time setup: Given no accounts → POST /api/accounts with key → GET /api/accounts returns 1 account status \\\"unknown\\\"\\n- Test key validity: Given account exists → POST /api/accounts/:id/test → status updated to \\\"active\\\" or \\\"invalid\\\"\\n- Rotate key: Given account with old key → PUT /api/accounts/:id/key → old deleted, new created\\n- Delete account: Given 2 accounts → DELETE /api/accounts/:id → only 1 remains\\n- Key security: Given account created → GET /api/accounts → api_key is undefined (stripped)\\n- Key backup email: Given email configured → POST /api/accounts/backup → email sent with encrypted keys\\n\\ntests/bdd/routing-config.test.js:\\n- Quality gates: Given model without tool support → request has tools → model excluded\\n- Trust tier filtering: Given \\\"private\\\" tier request → only local models considered\\n- Rate limit visibility: Given rate limiter with recorded requests → GET /api/rate-limits → usage data returned\\n\\nKey files: tests/helpers/testDb.js, src/router/app.js, src/db/repositories/accounts.js\",\"assignedBy\":\"team-lead\",\"timestamp\":\"2026-03-09T02:42:06.991Z\"}",
+    "timestamp": "2026-03-09T02:42:06.991Z",
+    "read": true
+  },
+  {
+    "from": "dashboard-dev",
+    "text": "Task #2 complete. All 5 dashboard chart components created:\n\n- `src/dashboard/src/components/DashboardCard.svelte` (84 LOC) — dark paper card with SVG grain texture, torn-edge filter, Permanent Marker/Special Elite fonts, accent colors\n- `src/dashboard/src/components/BarChart.svelte` (104 LOC) — pure SVG, animated on mount, hover tooltips, hand-drawn stroke variation\n- `src/dashboard/src/components/AreaChart.svelte` (120 LOC) — time series with gradient fill, hover dots, X/Y axis labels, responsive viewBox\n- `src/dashboard/src/components/DonutChart.svelte` (114 LOC) — stroke-dasharray segments, hover highlight, center total, legend\n- `src/dashboard/src/components/SavingsComparison.svelte` (137 LOC) — animated $effect counter, side-by-side bars, reuses BarChart for per-provider breakdown\n\nAll use Svelte 5 runes ($state, $derived, $effect), zero external deps, dark paper palette (#1a1816/#252220/#3a3530), warm accents (#27864a/#d4831a/#7b68a8).\n\nTask #3 (Redesign dashboard views) is now unblocked — ready to be assigned.",
+    "summary": "Task #2 complete, 5 chart components created",
+    "timestamp": "2026-03-09T02:43:05.902Z",
+    "color": "green",
+    "read": true
+  },
+  {
+    "from": "dashboard-dev",
+    "text": "{\"type\":\"idle_notification\",\"from\":\"dashboard-dev\",\"timestamp\":\"2026-03-09T02:43:12.801Z\",\"idleReason\":\"available\"}",
+    "timestamp": "2026-03-09T02:43:12.801Z",
+    "color": "green",
+    "read": true
+  },
+  {
+    "from": "test-dev",
+    "text": "IMPLEMENTATION COMPLETE\nTask: Create load testing harness | Files: tests/load/routing-simulation.test.js (196 LOC) | Summary: Built MockAdapter extending BaseAdapter with configurable shouldFail/latencyMs/failAfter/response; 7 scenarios covering cheapest-first routing (50 sequential requests), rate limit exhaustion with fallback, circuit breaker at threshold=3, timeout/fallback via executeWithFallback, capability filtering (tools+vision), budget enforcement, and provider_stats DB verification. All 9 tests pass (1.00s). Security scan clean — no secrets found.",
+    "summary": "Task 4 complete — all 9 load tests pass",
+    "timestamp": "2026-03-09T02:43:31.731Z",
+    "color": "yellow",
+    "read": true
+  },
+  {
+    "from": "mobile-dev",
+    "text": "Task #7 (Optimize mobile homepage) is complete.\n\nChanges made:\n\n**website/src/components/Hero.svelte:**\n- Added `<div class=\"sm:hidden font-heading text-3xl text-ink text-center mb-4\">FREELOADER</div>` mobile logo before Terminal\n- Wrapped Terminal container with `class=\"max-w-3xl mx-auto mb-12 transform sm:scale-100 scale-[0.7] origin-top\"` for mobile scaling\n- Stat cards: `text-3xl sm:text-5xl sm:text-6xl` for providers and models, `text-3xl sm:text-6xl sm:text-7xl` for $0 card\n\n**website/src/pages/index.astro:**\n- Provider chip grids (both): `grid-cols-4 sm:grid-cols-7` → `grid-cols-3 sm:grid-cols-4 lg:grid-cols-7`\n- All 7 sections: `py-28` → `py-16 sm:py-28`\n- Feature cards grid: `gap-5` → `gap-3 sm:gap-5`\n- Code example: `font-typewriter text-sm` → `font-typewriter text-xs sm:text-sm`\n\n**website/src/layouts/Base.astro:**\n- Added `overflow-x: hidden` to body to prevent horizontal scroll from rotated elements\n\nNo available tasks remain unblocked for me to claim.",
+    "summary": "Task #7 mobile homepage optimization complete",
+    "timestamp": "2026-03-09T02:43:37.503Z",
+    "color": "purple",
+    "read": true
+  },
+  {
+    "from": "dashboard-dev",
+    "text": "{\"type\":\"idle_notification\",\"from\":\"dashboard-dev\",\"timestamp\":\"2026-03-09T02:43:38.008Z\",\"idleReason\":\"available\",\"summary\":\"[to dashboard-dev] Task #2 already done, no action needed\"}",
+    "timestamp": "2026-03-09T02:43:38.008Z",
+    "color": "green",
+    "read": true
+  },
+  {
+    "from": "mobile-dev",
+    "text": "{\"type\":\"idle_notification\",\"from\":\"mobile-dev\",\"timestamp\":\"2026-03-09T02:43:49.999Z\",\"idleReason\":\"available\"}",
+    "timestamp": "2026-03-09T02:43:49.999Z",
+    "color": "purple",
+    "read": true
+  },
+  {
+    "from": "test-dev",
+    "text": "{\"type\":\"idle_notification\",\"from\":\"test-dev\",\"timestamp\":\"2026-03-09T02:43:55.429Z\",\"idleReason\":\"available\"}",
+    "timestamp": "2026-03-09T02:43:55.429Z",
+    "color": "yellow",
+    "read": true
+  },
+  {
+    "from": "dashboard-dev",
+    "text": "{\"type\":\"idle_notification\",\"from\":\"dashboard-dev\",\"timestamp\":\"2026-03-09T02:44:01.634Z\",\"idleReason\":\"available\"}",
+    "timestamp": "2026-03-09T02:44:01.634Z",
+    "color": "green",
+    "read": true
+  },
+  {
+    "from": "backend-dev",
+    "text": "Tasks #1 and #6 are both complete.\n\nTask #1 (usage repo + API endpoints):\n- `src/db/repositories/usage.js` — added `getTimeseries(days)` and `getByProviderAggregated(since)`\n- `src/router/app.js` — added `GET /api/usage/timeseries`, `GET /api/usage/by-provider`, `POST /api/accounts/backup` (encrypts with `encryptApiKey`, sends email with attachment)\n- `src/email/mailer.js` — `send()` now accepts optional 4th `attachments` param\n- `src/dashboard/src/lib/api.js` — added `usageTimeseries(days)`, `usageByProvider()`, `backupKeys()`\n\nTask #6 (PDF report + email integration):\n- Installed `pdfkit`\n- Created `src/email/pdf-report.js` with `PdfReportGenerator` class (generates ~1.6KB PDF)\n- Updated `src/email/digest.js` `buildDaily()` to generate PDF and return `attachments` array\n- Updated `src/email/scheduler.js` `sendDigest()` to pass attachments to `mailer.send()`\n\nNo blocked issues. Task #3 (dashboard redesign) is next and unblocked now that #1 and #2 are done.",
+    "summary": "Tasks 1 and 6 complete — usage APIs and PDF email",
+    "timestamp": "2026-03-09T02:44:02.142Z",
+    "color": "blue",
+    "read": true
+  },
+  {
+    "from": "test-dev",
+    "text": "{\"type\":\"idle_notification\",\"from\":\"test-dev\",\"timestamp\":\"2026-03-09T02:44:10.226Z\",\"idleReason\":\"available\"}",
+    "timestamp": "2026-03-09T02:44:10.226Z",
+    "color": "yellow",
+    "read": true
+  },
+  {
+    "from": "backend-dev",
+    "text": "{\"type\":\"idle_notification\",\"from\":\"backend-dev\",\"timestamp\":\"2026-03-09T02:44:12.490Z\",\"idleReason\":\"available\"}",
+    "timestamp": "2026-03-09T02:44:12.490Z",
+    "color": "blue",
+    "read": true
+  },
+  {
+    "from": "backend-dev",
+    "text": "{\"type\":\"idle_notification\",\"from\":\"backend-dev\",\"timestamp\":\"2026-03-09T02:44:17.727Z\",\"idleReason\":\"available\"}",
+    "timestamp": "2026-03-09T02:44:17.727Z",
+    "color": "blue",
+    "read": true
+  },
+  {
+    "from": "backend-dev",
+    "text": "{\"type\":\"idle_notification\",\"from\":\"backend-dev\",\"timestamp\":\"2026-03-09T02:44:24.752Z\",\"idleReason\":\"available\"}",
+    "timestamp": "2026-03-09T02:44:24.752Z",
+    "color": "blue",
+    "read": true
+  },
+  {
+    "from": "mobile-dev",
+    "text": "{\"type\":\"idle_notification\",\"from\":\"mobile-dev\",\"timestamp\":\"2026-03-09T02:44:46.908Z\",\"idleReason\":\"available\",\"summary\":\"[to mobile-dev] Task already complete, all changes in place\"}",
+    "timestamp": "2026-03-09T02:44:46.908Z",
+    "color": "purple",
+    "read": true
+  },
+  {
+    "from": "content-dev",
+    "text": "Task #8 complete. Created 7 content planning documents in docs/articles/:\n\n1. 01-replace-openclaw-heartbeat.md — Migration guide outline, config comparison table, covers healthMonitor + circuit breaker vs. polling heartbeat\n2. 02-freeloader-for-claude-code.md — OPENAI_BASE_URL setup, trust tier strategy for code vs. docs, free vs. premium model selection\n3. 03-freeloader-for-langchain.md — Python + JS examples, LangGraph tiered model nodes, per-chain cost tracking callback\n4. 04-freeloader-for-ide-tools.md — Cursor/Continue/Aider/Zed setup configs, model recommendations by task type, trust tiers for private code\n5. 05-freeloader-for-vercel-ai.md — Next.js App Router streaming example, per-user budget controls, dev/prod env config\n6. 06-top-50-llm-tools.md — Full 50-tool survey table across 7 categories with Freeloader compatibility ratings (34 High, 7 Medium, 9 Low)\n7. 07-zero-dollar-ai-stack.md — Dual-format (5-min video script + 2000-word article), includes \"Gemini Gambit\", \"Groq Express\", \"Cerebras Speedrun\", \"Local Lockdown\" tips\n\nEach doc has: title, target audience, H2 outline, copy-pasteable code examples, estimated length, SEO keywords.",
+    "summary": "Task #8 complete — 7 content outlines created",
+    "timestamp": "2026-03-09T02:47:24.380Z",
+    "color": "orange",
+    "read": true
+  },
+  {
+    "from": "content-dev",
+    "text": "{\"type\":\"idle_notification\",\"from\":\"content-dev\",\"timestamp\":\"2026-03-09T02:47:34.929Z\",\"idleReason\":\"available\"}",
+    "timestamp": "2026-03-09T02:47:34.929Z",
+    "color": "orange",
+    "read": true
+  },
+  {
+    "from": "content-dev",
+    "text": "{\"type\":\"idle_notification\",\"from\":\"content-dev\",\"timestamp\":\"2026-03-09T02:47:47.043Z\",\"idleReason\":\"available\"}",
+    "timestamp": "2026-03-09T02:47:47.043Z",
+    "color": "orange",
+    "read": true
+  },
+  {
+    "from": "team-lead",
+    "text": "{\"type\":\"task_assignment\",\"taskId\":\"9\",\"subject\":\"Run tests and verify everything passes\",\"description\":\"Run npm test and verify all existing 130+ tests pass plus all new load/BDD tests. Fix any failures. Build the dashboard to verify it compiles.\",\"assignedBy\":\"team-lead\",\"timestamp\":\"2026-03-09T02:53:58.945Z\"}",
+    "timestamp": "2026-03-09T02:53:58.945Z",
+    "read": true
+  },
+  {
+    "from": "mobile-dev",
+    "text": "Task #3 (Redesign dashboard views with dark paper theme) is complete.\n\nFiles modified:\n- `src/dashboard/index.html` — @font-face for Permanent Marker, Special Elite, Source Sans 3; CSS vars for dark palette\n- `src/dashboard/src/app.css` — body bg #1a1816, text #c8bdb6, scrollbar colors\n- `src/dashboard/src/App.svelte` — bg-gray-900 → #1a1816 inline style\n- `src/dashboard/src/components/Nav.svelte` — full dark paper restyle: #1e1c1a bg, Permanent Marker branding, Special Elite nav labels, #27864a active state\n- `src/dashboard/src/views/Overview.svelte` — REWRITE: DashboardCard stat grid, AreaChart daily cost trend (api.usageTimeseries), DonutChart provider distribution (api.usageByProvider), SavingsComparison, free tier progress bar, paper-themed provider health and live feed\n- `src/dashboard/src/views/Usage.svelte` — REWRITE: DashboardCard + BarChart cost-by-provider + AreaChart cost-by-day + styled request table\n- `src/dashboard/src/views/Login.svelte` — DashboardCard login form, Permanent Marker heading, dark inputs\n- `src/dashboard/src/views/Accounts.svelte` — DashboardCard add form + table, inline modal\n- `src/dashboard/src/views/Providers.svelte` — DashboardCard + dark table with tier/health styling\n- `src/dashboard/src/views/Apps.svelte` — DashboardCard per-app cards + create form\n- `src/dashboard/src/views/Routing.svelte` — DashboardCard presets + sliders\n- `src/dashboard/src/views/Opportunities.svelte` — DashboardCard with left-border accent per type\n- `src/dashboard/src/views/Settings.svelte` — DashboardCard general/password/about sections\n\nAll views use DashboardCard and inline dark paper styles. No remaining unblocked tasks for me.",
+    "summary": "Task #3 dashboard dark paper theme complete",
+    "timestamp": "2026-03-09T02:54:35.556Z",
+    "color": "purple",
+    "read": true
+  },
+  {
+    "from": "mobile-dev",
+    "text": "{\"type\":\"idle_notification\",\"from\":\"mobile-dev\",\"timestamp\":\"2026-03-09T02:54:47.168Z\",\"idleReason\":\"available\"}",
+    "timestamp": "2026-03-09T02:54:47.168Z",
+    "color": "purple",
+    "read": true
+  },
+  {
+    "from": "mobile-dev",
+    "text": "Task #3 is done and marked completed. All 13 dashboard files were updated with the dark paper theme. Summary:\n\n- Overview: full rewrite with DashboardCard, AreaChart (timeseries), DonutChart (by-provider), SavingsComparison, progress bar\n- Usage: DashboardCard + BarChart + AreaChart + dark table\n- Login, Accounts, Providers, Apps, Routing, Opportunities, Settings: all wrapped in DashboardCard\n- Nav: dark paper restyle with Permanent Marker/Special Elite fonts\n- index.html: @font-face declarations added\n- app.css: body bg #1a1816, scrollbars themed\n\nReady for final verification whenever you are.",
+    "summary": "Task #3 complete, ready for verification",
+    "timestamp": "2026-03-09T02:54:57.515Z",
+    "color": "purple",
+    "read": true
+  },
+  {
+    "from": "mobile-dev",
+    "text": "{\"type\":\"idle_notification\",\"from\":\"mobile-dev\",\"timestamp\":\"2026-03-09T02:55:03.059Z\",\"idleReason\":\"available\"}",
+    "timestamp": "2026-03-09T02:55:03.059Z",
+    "color": "purple",
+    "read": true
+  },
+  {
+    "from": "backend-dev",
+    "text": "{\"type\":\"shutdown_approved\",\"requestId\":\"shutdown-1773024910307@backend-dev\",\"from\":\"backend-dev\",\"timestamp\":\"2026-03-09T02:55:13.900Z\",\"paneId\":\"in-process\",\"backendType\":\"in-process\"}",
+    "timestamp": "2026-03-09T02:55:13.900Z",
+    "color": "blue",
+    "read": true
+  },
+  {
+    "from": "test-dev",
+    "text": "{\"type\":\"shutdown_approved\",\"requestId\":\"shutdown-1773024911581@test-dev\",\"from\":\"test-dev\",\"timestamp\":\"2026-03-09T02:55:19.078Z\",\"paneId\":\"in-process\",\"backendType\":\"in-process\"}",
+    "timestamp": "2026-03-09T02:55:19.078Z",
+    "color": "yellow",
+    "read": true
+  },
+  {
+    "from": "content-dev",
+    "text": "{\"type\":\"shutdown_approved\",\"requestId\":\"shutdown-1773024912541@content-dev\",\"from\":\"content-dev\",\"timestamp\":\"2026-03-09T02:55:25.632Z\",\"paneId\":\"in-process\",\"backendType\":\"in-process\"}",
+    "timestamp": "2026-03-09T02:55:25.632Z",
+    "color": "orange",
+    "read": true
+  },
+  {
+    "from": "dashboard-dev",
+    "text": "{\"type\":\"shutdown_approved\",\"requestId\":\"shutdown-1773024910693@dashboard-dev\",\"from\":\"dashboard-dev\",\"timestamp\":\"2026-03-09T02:55:25.932Z\",\"paneId\":\"in-process\",\"backendType\":\"in-process\"}",
+    "timestamp": "2026-03-09T02:55:25.932Z",
+    "color": "green",
+    "read": true
+  },
+  {
+    "from": "mobile-dev",
+    "text": "Received a duplicate task #3 assignment. Confirmed it's already done — all 9 views have DashboardCard, #1a1816 bg is set, fonts declared, AreaChart/DonutChart/SavingsComparison wired up in Overview, BarChart+AreaChart in Usage. No work needed.",
+    "summary": "Task #3 duplicate — already complete, no action needed",
+    "timestamp": "2026-03-09T02:55:41.280Z",
+    "color": "purple",
+    "read": true
+  },
+  {
+    "from": "mobile-dev",
+    "text": "{\"type\":\"idle_notification\",\"from\":\"mobile-dev\",\"timestamp\":\"2026-03-09T02:55:48.240Z\",\"idleReason\":\"available\"}",
+    "timestamp": "2026-03-09T02:55:48.240Z",
+    "color": "purple",
+    "read": true
+  },
+  {
+    "from": "mobile-dev",
+    "text": "{\"type\":\"shutdown_approved\",\"requestId\":\"shutdown-1773024912172@mobile-dev\",\"from\":\"mobile-dev\",\"timestamp\":\"2026-03-09T02:56:07.238Z\",\"paneId\":\"in-process\",\"backendType\":\"in-process\"}",
+    "timestamp": "2026-03-09T02:56:07.238Z",
+    "color": "purple",
+    "read": true
+  }
+]

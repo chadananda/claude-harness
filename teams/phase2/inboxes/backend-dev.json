@@ -1,0 +1,22 @@
+[
+  {
+    "from": "backend-dev",
+    "text": "{\"type\":\"task_assignment\",\"taskId\":\"1\",\"subject\":\"Add usage repository methods and API endpoints\",\"description\":\"Add getTimeseries(days) and getByProviderAggregated(since) to src/db/repositories/usage.js. Add GET /api/usage/timeseries and GET /api/usage/by-provider endpoints to src/router/app.js. Add POST /api/accounts/backup endpoint to src/router/app.js. Add usageTimeseries(), usageByProvider(), backupKeys() to src/dashboard/src/lib/api.js. Also modify src/email/mailer.js to accept attachments parameter.\",\"assignedBy\":\"backend-dev\",\"timestamp\":\"2026-03-09T02:39:57.907Z\"}",
+    "timestamp": "2026-03-09T02:39:57.907Z",
+    "color": "blue",
+    "read": true
+  },
+  {
+    "from": "backend-dev",
+    "text": "{\"type\":\"task_assignment\",\"taskId\":\"6\",\"subject\":\"Create PDF report generator and email integration\",\"description\":\"1. Add pdfkit dependency to package.json\\n2. Create src/email/pdf-report.js with PdfReportGenerator class:\\n   - constructor(db, logger)\\n   - async generateDaily() → Buffer\\n   - Page 1: Executive summary (date range, total requests, cost, savings, \\\"vs OpenAI\\\" comparison)\\n   - Page 2: Provider breakdown (table: provider, requests, tokens, cost, avg latency; pie chart)\\n   - Page 3: Model usage details (top 10 models, free tier utilization %)\\n3. Modify src/email/digest.js buildDaily():\\n   - After building HTML digest, also generate PDF\\n   - Return { subject, html, attachments: [{ filename, content }] }\\n4. Modify src/email/mailer.js send():\\n   - Accept optional attachments parameter\\n   - Pass to nodemailer.sendMail({ attachments })\\n5. Modify src/email/scheduler.js sendDigest():\\n   - Pass attachments from digest to mailer\\n\\nNote: mailer.js attachment support will be added in task 1. This task adds pdfkit, creates the generator, and integrates with digest/scheduler.\",\"assignedBy\":\"backend-dev\",\"timestamp\":\"2026-03-09T02:40:58.646Z\"}",
+    "timestamp": "2026-03-09T02:40:58.646Z",
+    "color": "blue",
+    "read": true
+  },
+  {
+    "from": "team-lead",
+    "text": "{\"type\":\"shutdown_request\",\"requestId\":\"shutdown-1773024910307@backend-dev\",\"from\":\"team-lead\",\"reason\":\"All tasks complete. Shutting down.\",\"timestamp\":\"2026-03-09T02:55:10.307Z\"}",
+    "timestamp": "2026-03-09T02:55:10.307Z",
+    "read": true
+  }
+]

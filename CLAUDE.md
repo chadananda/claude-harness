@@ -26,6 +26,18 @@ When producing human-facing text, load domains/writing-voice.md. Domains that ge
 - src/|lib/ code; tests/ tests; docs/ docs; scripts/ utils; tmp/ temp (gitignored)
 - Commit after each task group. Never commit tmp/ or .claude/context/. Use ./tmp/ not ~/tmp.
 
+## Token Efficiency
+- Use `--limit` when reading files — don't read entire files when you need a section.
+- `grep`/`Grep` before reading — find the relevant section first.
+- Don't re-read files already in context.
+- Prefer `Glob` and `Grep` over `Bash(find)` and `Bash(grep)`.
+
+## Worker Status Reporting
+On completing a task (especially autonomous/dispatched work), write `worker-status.json` to the project root:
+```json
+{"status":"complete","timestamp":"ISO","summary":"what was done","commits":["hash"],"tests_added":0,"files_removed":0,"lines_removed":0,"needs_attention":false}
+```
+
 ## Autonomy
 Work autonomously until blocked on human decision. Never ask "should I proceed?" — shifts cognitive load for non-decisions. Invoke stuck agent when genuinely stuck — real ambiguity needs human judgment.
 

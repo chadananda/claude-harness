@@ -1,0 +1,15 @@
+[
+  {
+    "from": "test-dev",
+    "text": "{\"type\":\"task_assignment\",\"taskId\":\"4\",\"subject\":\"Create load testing harness\",\"description\":\"Create tests/load/routing-simulation.test.js - Vitest-based load simulation exercising the full router stack with mock providers.\\n\\nScenarios:\\n- Happy path: 50 sequential requests, verify cheapest-first routing, free tier consumed first\\n- Rate limit exhaustion: Slam one model past RPM limit, verify automatic fallback to next cheapest\\n- Provider failure injection: Mock adapter throws errors, verify circuit breaker opens, requests reroute\\n- Timeout simulation: Mock adapter delays 10s, verify timeout and fallback\\n- Mixed load: Concurrent requests with tools/vision requirements, verify capability filtering\\n- Budget enforcement: Set $0.01 budget, verify hard stop\\n- Provider quality tracking: Track error rates per provider, verify provider_stats table populated\\n\\nImplementation:\\n- Create mock provider adapters with configurable failure/latency/success behavior\\n- Use tests/helpers/testDb.js for in-memory SQLite\\n- Use Fastify .inject() (pattern from tests/unit/router/app.test.js)\\n- Seed 5+ providers with different pricing, free tiers, rate limits\\n- Assert on: route selection order, fallback count, circuit breaker state, usage records, provider_stats\\n\\nKey files: tests/helpers/testDb.js, src/router/rate-limiter.js, src/router/scorer.js, src/providers/health-monitor.js, src/router/app.js\",\"assignedBy\":\"test-dev\",\"timestamp\":\"2026-03-09T02:40:28.585Z\"}",
+    "timestamp": "2026-03-09T02:40:28.585Z",
+    "color": "yellow",
+    "read": true
+  },
+  {
+    "from": "team-lead",
+    "text": "{\"type\":\"shutdown_request\",\"requestId\":\"shutdown-1773024911581@test-dev\",\"from\":\"team-lead\",\"reason\":\"All tasks complete. Shutting down.\",\"timestamp\":\"2026-03-09T02:55:11.581Z\"}",
+    "timestamp": "2026-03-09T02:55:11.581Z",
+    "read": true
+  }
+]
